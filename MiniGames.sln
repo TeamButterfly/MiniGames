@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{99E37B8E-32E0-4CE2-AE0D-A8FA9DE601BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesterProject", "TesterProject\TesterProject.csproj", "{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterProject", "TesterProject\TesterProject.csproj", "{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slide Puzzle", "Slide Puzzle\Slide Puzzle.csproj", "{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
