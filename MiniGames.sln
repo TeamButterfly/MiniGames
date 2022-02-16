@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterProject", "TesterProject\TesterProject.csproj", "{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slide Puzzle", "Slide Puzzle\Slide Puzzle.csproj", "{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slide Puzzle", "Slide Puzzle\Slide Puzzle.csproj", "{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tick_Tack_Toe", "Tick_Tack_Toe\Tick_Tack_Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tick_Tack_Toe", "Tick_Tack_Toe\Tick_Tack_Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +25,14 @@ Global
 		{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
