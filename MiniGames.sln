@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterProject", "TesterProj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slide Puzzle", "Slide Puzzle\Slide Puzzle.csproj", "{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tick_Tack_Toe", "Tick_Tack_Toe\Tick_Tack_Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tick Tack Toe", "Tick_Tack_Toe\Tick Tack Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
