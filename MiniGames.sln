@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slide Puzzle", "Slide Puzzl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tick Tack Toe", "Tick_Tack_Toe\Tick Tack Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
