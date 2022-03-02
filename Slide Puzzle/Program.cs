@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Slide_Puzzle
 {
@@ -6,7 +7,9 @@ namespace Slide_Puzzle
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Game game = new Game();
+            game.setup();
+            game.display();
         }
     }
 }

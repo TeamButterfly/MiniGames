@@ -12,7 +12,7 @@ class Program
 			db.SaveChanges();
 
 			var userKat = db.Users.First(u => u.Username == "kat");
-			
+
 			db.Add(new Account { AccountId = Guid.NewGuid(), Points = 1, UserId = userKat.UserId });
 			db.SaveChanges();
         }
