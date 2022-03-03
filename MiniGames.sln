@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{99E37B8E-32E0-4CE2-AE0D-A8FA9DE601BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73} = {B57C0EE7-0C70-4D40-A881-CCEBF796BC73}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterProject", "TesterProject\TesterProject.csproj", "{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}"
 EndProject
@@ -11,7 +14,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slide Puzzle", "Slide Puzzl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tick Tack Toe", "Tick_Tack_Toe\Tick Tack Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuisnessLogic", "BuisnessLogic\BuisnessLogic.csproj", "{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{749FE63C-9E92-4D25-AD06-902838AA0378}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

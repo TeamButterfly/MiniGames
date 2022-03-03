@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -16,9 +11,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public ActionResult<bool> Get()
         {
-            return "API is up!";
+            return true;
         }
     }
 }

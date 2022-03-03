@@ -1,5 +1,3 @@
-using API;
-using Database;
 using NUnit.Framework;
 
 namespace TesterProject.StepDefinitions
@@ -13,10 +11,6 @@ namespace TesterProject.StepDefinitions
         public void GivenTheFirstNumberIs(int number)
         {
             first_number = number;
-
-            using (var db = new DatabaseContext())
-            {
-            }
         }
 
         [Given("the second number is (.*)")]

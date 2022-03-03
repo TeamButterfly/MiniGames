@@ -1,4 +1,4 @@
-﻿namespace Database
+﻿namespace BuisnessLogic
 {
     public class Account
     {

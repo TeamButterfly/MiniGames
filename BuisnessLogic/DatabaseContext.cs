@@ -4,7 +4,7 @@ using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Database
+namespace BuisnessLogic
 {
     public class DatabaseContext : DbContext
     {
