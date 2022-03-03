@@ -17,5 +17,15 @@ namespace BuisnessLogic
         {
             optionsBuilder.UseSqlServer(ConnectionString);
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => new { u.Username })
+                .IsUnique(true);
+
+            modelBuilder.Entity<Account>()
+                .HasIndex(a => new { a.UserId })
+                .IsUnique(true);
+        }
     }
 }

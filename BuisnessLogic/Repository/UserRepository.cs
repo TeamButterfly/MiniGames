@@ -12,7 +12,7 @@ namespace BuisnessLogic.Repository
         public User GetUser(Guid id)
         {
             using var _dbContext = new DatabaseContext();
-            return _dbContext.Users.First(u => u.UserId == id);
+            return _dbContext.Users.First(u => u.UserId.Equals(id));
         }
 
         public List<User> GetUsers()
@@ -46,7 +46,7 @@ namespace BuisnessLogic.Repository
         {
             using var _dbContext = new DatabaseContext();
 
-            var user = _dbContext.Users.FirstOrDefault(u => u.UserId == userModel.UserId);
+            var user = _dbContext.Users.FirstOrDefault(u => u.UserId.Equals(userModel.UserId));
             if (user == null)
             {
                 throw new Exception("Brugeren eksisterer ikke");

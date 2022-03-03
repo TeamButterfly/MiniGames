@@ -10,8 +10,10 @@ namespace API
         {
             CreateMap<User, JsonUser>();
             CreateMap<JsonUser, User>();
-
             CreateMap<JsonUpdateUser, User>();
+
+            CreateMap<Account, JsonAccount>();
+            CreateMap<JsonAccount, Account>();
         }
     }
 }

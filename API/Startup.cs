@@ -38,6 +38,7 @@ namespace API
             });
 
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IAccountRepository, AccountRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var mappingConfig = new MapperConfiguration(cfg => {

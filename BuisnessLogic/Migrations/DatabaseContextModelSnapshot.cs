@@ -36,7 +36,8 @@ namespace BuisnessLogic.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -57,6 +58,9 @@ namespace BuisnessLogic.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

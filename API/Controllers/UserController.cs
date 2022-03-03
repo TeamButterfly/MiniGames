@@ -30,7 +30,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<JsonUser>> GetUser(Guid id)
+        public ActionResult<JsonUser> GetUser(Guid id)
         {
             var user = _userRepository.GetUser(id);
             return Ok(_mapper.Map<JsonUser>(user));

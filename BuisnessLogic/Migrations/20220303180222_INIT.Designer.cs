@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuisnessLogic.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220303130441_INIT")]
+    [Migration("20220303180222_INIT")]
     partial class INIT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,8 @@ namespace BuisnessLogic.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -59,6 +60,9 @@ namespace BuisnessLogic.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
