@@ -1,4 +1,6 @@
-﻿namespace BuisnessLogic.Repository
+﻿using BCryptNet = BCrypt.Net.BCrypt;
+
+namespace BuisnessLogic.Repository
 {
 
     public class UserRepository : IUserRepository
@@ -31,6 +33,8 @@
 
             ValidateUser(user);
 
+            user.Password = BCryptNet.HashPassword(user.Password);
+
             _dbContext.Users.Add(user);
             var account = new Account { AccountId = Guid.NewGuid(), Points = 1, UserId = user.UserId };
             _dbContext.Accounts.Add(account);
@@ -48,10 +52,10 @@
 
             user.Username = userModel.Username;
 
-            if(userModel.Password != null)
-                user.Password = userModel.Password;
-
             ValidateUser(user);
+
+            if (userModel.Password != null)
+                user.Password = BCryptNet.HashPassword(userModel.Password);
 
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
