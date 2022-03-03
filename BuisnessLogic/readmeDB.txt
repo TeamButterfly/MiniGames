@@ -8,9 +8,19 @@ cd .\BuisnessLogic\
 --------------------------------------------------------------------------------------------------------------------------
 /*
  Kør update script, så bliver alle DB opdateret
+ Hvis det ikke virker direkte så kør "database drop" afsnittet
 */
 
 .\updateDB.ps1
+--------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------
+/*
+ Database drop (Hvis update scriptet ikke virker så drop dine databaser først med)
+*/
+
+dotnet ef database drop -f --context DatabaseContext
+dotnet ef database drop -f --context TestDatabaseContext
 --------------------------------------------------------------------------------------------------------------------------
 
 
