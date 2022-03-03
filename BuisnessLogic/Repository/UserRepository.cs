@@ -23,16 +23,17 @@ namespace BuisnessLogic.Repository
 
         public bool CreateUser(User user)
         {
+            if (user.UserId != Guid.Empty)
+                throw new Exception("Et bruger id skal ikke sendes med ved oprettelse af bruger");
+
             using var _dbContext = new DatabaseContext();
 
-            if (user.UserId == Guid.Empty)
-            {
-                user.UserId = Guid.NewGuid();
-            }
-            else
-            {
-                throw new Exception("Et bruger id skal ikke sendes med ved oprettelse af bruger");
-            }
+            var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
+            if (existingUser != null)
+                throw new Exception("En bruger med det brugername eksisterer allerede");
+
+            user.UserId = Guid.NewGuid();
+            ValidateUser(user);
 
             _dbContext.Users.Add(user);
             var account = new Account { AccountId = Guid.NewGuid(), Points = 1, UserId = user.UserId };
@@ -56,8 +57,23 @@ namespace BuisnessLogic.Repository
             if(userModel.Password != null)
                 user.Password = userModel.Password;
 
+            ValidateUser(user);
+
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool ValidateUser(User user)
+        {
+            if (user.Username.Length < 3 || user.Username.Length > 20)
+            {
+                throw new Exception("Brugernavnet skal være mellem 3 og 20 karakterer");
+            }
+            if (user.Password.Length < 3 || user.Password.Length > 20)
+            {
+                throw new Exception("Passwordet skal være mellem 3 og 20 karakterer");
+            }
             return true;
         }
     }

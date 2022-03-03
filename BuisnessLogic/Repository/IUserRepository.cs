@@ -12,5 +12,7 @@ namespace BuisnessLogic.Repository
         public bool UpdateUser(User user);
         public List<User> GetUsers();
         public User GetUser(Guid id);
+
+        public bool ValidateUser(User user);
     }
 }
