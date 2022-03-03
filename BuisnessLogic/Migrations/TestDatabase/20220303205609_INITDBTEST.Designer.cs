@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BuisnessLogic.Migrations
+namespace BuisnessLogic.Migrations.TestDatabase
 {
-    [DbContext(typeof(DatabaseContext))]
-    [Migration("20220303180222_INIT")]
-    partial class INIT
+    [DbContext(typeof(TestDatabaseContext))]
+    [Migration("20220303205609_INITDBTEST")]
+    partial class INITDBTEST
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

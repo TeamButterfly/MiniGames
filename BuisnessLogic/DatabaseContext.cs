@@ -28,4 +28,13 @@ namespace BuisnessLogic
                 .IsUnique(true);
         }
     }
+
+    public class TestDatabaseContext : DatabaseContext
+    {
+        private static readonly string ConnectionStringTest = "Server=(localdb)\\mssqllocaldb;Database=Minigame_Test;Trusted_Connection=True;";
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(ConnectionStringTest);
+        }
+    }
 }

@@ -13,6 +13,9 @@ namespace BuisnessLogic.Repository
         public List<User> GetUsers();
         public User GetUser(Guid id);
 
+        public bool DeleteUser(Guid id);
+        public bool DeleteUsers(List<Guid> userIds);
+
         public bool ValidateUser(User user);
     }
 }

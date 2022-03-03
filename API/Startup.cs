@@ -37,8 +37,11 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
 
+            services.AddDbContext<DatabaseContext>();
+            services.AddSingleton<IDatabaseConnection, DatabaseConnection>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IAccountRepository, AccountRepository>();
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var mappingConfig = new MapperConfiguration(cfg => {

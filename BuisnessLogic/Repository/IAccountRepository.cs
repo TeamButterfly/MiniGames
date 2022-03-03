@@ -12,5 +12,6 @@ namespace BuisnessLogic.Repository
         public List<Account> GetAccounts();
         public Account GetAccount(Guid id);
         public Account GetAccountByUserId(Guid id);
+        public bool DeleteAccount(Guid id);
     }
 }

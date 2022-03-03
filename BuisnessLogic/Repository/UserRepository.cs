@@ -1,38 +1,34 @@
-﻿using BuisnessLogic.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BuisnessLogic.Repository
+﻿namespace BuisnessLogic.Repository
 {
+
     public class UserRepository : IUserRepository
     {
+        private readonly DatabaseContext _dbContext;
+
+        public UserRepository(IDatabaseConnection connection, bool isTest = false)
+        {
+            _dbContext = (isTest ? connection.TestDatabaseContext : connection.DatabaseContext);
+        }
+
         public User GetUser(Guid id)
         {
-            using var _dbContext = new DatabaseContext();
             return _dbContext.Users.First(u => u.UserId.Equals(id));
         }
 
         public List<User> GetUsers()
         {
-            using var _dbContext = new DatabaseContext();
             return _dbContext.Users.ToList();
         }
 
         public bool CreateUser(User user)
         {
-            if (user.UserId != Guid.Empty)
-                throw new Exception("Et bruger id skal ikke sendes med ved oprettelse af bruger");
-
-            using var _dbContext = new DatabaseContext();
-
             var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
             if (existingUser != null)
                 throw new Exception("En bruger med det brugername eksisterer allerede");
 
-            user.UserId = Guid.NewGuid();
+            if (user.UserId == Guid.Empty)
+                user.UserId = Guid.NewGuid();
+
             ValidateUser(user);
 
             _dbContext.Users.Add(user);
@@ -44,8 +40,6 @@ namespace BuisnessLogic.Repository
 
         public bool UpdateUser(User userModel)
         {
-            using var _dbContext = new DatabaseContext();
-
             var user = _dbContext.Users.FirstOrDefault(u => u.UserId.Equals(userModel.UserId));
             if (user == null)
             {
@@ -60,6 +54,32 @@ namespace BuisnessLogic.Repository
             ValidateUser(user);
 
             _dbContext.Users.Update(user);
+            _dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteUser(Guid id)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.UserId.Equals(id));
+            if (user == null)
+            {
+                throw new Exception("Kontoen eksisterer ikke");
+            }
+
+            var account = _dbContext.Accounts.FirstOrDefault(a => a.UserId.Equals(id));
+
+            _dbContext.Users.Remove(user);
+            _dbContext.Accounts.Remove(account);
+            _dbContext.SaveChanges();
+            return true;
+        }
+        public bool DeleteUsers(List<Guid> userIds)
+        {
+            var users = _dbContext.Users.Where(u => userIds.Contains(u.UserId)).ToList();
+            var accounts = _dbContext.Accounts.Where(a => userIds.Contains(a.UserId)).ToList();
+
+            _dbContext.Users.RemoveRange(users);
+            _dbContext.Accounts.RemoveRange(accounts);
             _dbContext.SaveChanges();
             return true;
         }

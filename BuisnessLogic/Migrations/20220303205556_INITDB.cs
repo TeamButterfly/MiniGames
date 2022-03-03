@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BuisnessLogic.Migrations
 {
-    public partial class INIT : Migration
+    public partial class INITDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

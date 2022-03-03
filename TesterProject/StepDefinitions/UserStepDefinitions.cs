@@ -12,37 +12,27 @@ namespace TesterProject.StepDefinitions
     [Binding]
     public class UserStepDefinitions : AutoMockObject
     {
+        private readonly IDatabaseConnection _databaseConnection;
         private readonly IUserRepository _userRepository;
-
-        private List<User> users = new List<User>();
-        private User user;
-        private bool isUserCreated;
-        private bool isUserUpdated;
-        private Guid userId;
 
         public UserStepDefinitions()
         {
-            var fakeUser1 = new User() { UserId = Guid.NewGuid(), Username = "eteller", Password = "andet"};
-            var fakeUser2 = new User() { UserId = Guid.NewGuid(), Username = "noneksistente", Password = "faker" };
-            var fakeUsers = new List<User>();
-            fakeUsers.Add(fakeUser1);
-            fakeUsers.Add(fakeUser2);
+            _databaseConnection = new DatabaseConnection();
+            _userRepository = new UserRepository(_databaseConnection, isTest: true);
 
-            Register<IUserRepository>(mock =>
+            var users = _userRepository.GetUsers();
+            if(users.Count() > 15)
             {
-                mock.Setup(framework => framework.GetUsers()).Returns(fakeUsers);
-                mock.Setup(framework => framework.GetUser(It.IsAny<Guid>())).Returns(fakeUser1);
-                mock.Setup(framework => framework.CreateUser(It.IsAny<User>())).Returns(true);
-                mock.Setup(framework => framework.UpdateUser(It.IsAny<User>())).Returns(true);
-            });
-
-            _userRepository = Resolve<IUserRepository>();
+                _userRepository.DeleteUsers(users.Select(x => x.UserId).ToList());
+            }
         }
+
+        private List<User> users = new List<User>();
+        private User user;
 
         [Given(@"I select all valid users")]
         public void GivenISelectAllValidUsers()
         {
-            //Implicit er alle brugere valgt
         }
         [When(@"I click the see all user button")]
         public void WhenIClickTheSeeAllUserButton()
@@ -58,13 +48,11 @@ namespace TesterProject.StepDefinitions
         [Given(@"I select a valid user")]
         public void GivenISelectAValidUser()
         {
-            var users = _userRepository.GetUsers();
-            userId = users.First().UserId;
         }
         [When(@"I click the get information about the user button")]
         public void WhenIClickTheGetInformationAboutTheUserButton()
         {
-            user = _userRepository.GetUser(userId);
+            user = _userRepository.GetUser(_userRepository.GetUsers().First().UserId);
         }
         [Then(@"I get the user information returned")]
         public void ThenIGetTheUserInformationReturned()
@@ -75,7 +63,7 @@ namespace TesterProject.StepDefinitions
         [Given(@"I am a new user")]
         public void GivenICreateANewUser()
         {
-            user = new User { Username = "Hanne", Password = "kat!123" };
+            user = new User { Username = GenerateRandomString(8), Password = GenerateRandomString(8) };
         }
         [Given(@"I submit valid data")]
         public void GivenISubmitValidData()
@@ -85,28 +73,36 @@ namespace TesterProject.StepDefinitions
         [When(@"I click the create user button")]
         public void WhenIClickTheCreateUserButton()
         {
-            isUserCreated = _userRepository.CreateUser(user);
+            Assert.IsTrue(_userRepository.CreateUser(user));
         }
         [Then(@"The user is successfully created")]
         public void ThenTheUserIsSuccessfullyCreated()
         {
-            Assert.IsTrue(isUserCreated);
+            Assert.IsTrue(true);
         }
+
         [Given(@"I am an existing user")]
         public void GivenIUpdateAnExistingUser()
         {
-            var users = _userRepository.GetUsers();
-            user = new User { UserId = users.First().UserId, Username = "Ole", Password = "blah!123" };
+            user = new User { UserId = _userRepository.GetUsers().First().UserId, Username = GenerateRandomString(8), Password = GenerateRandomString(8) };
         }
         [When(@"I click the update user button")]
         public void WhenIClickTheUpdateUserButton()
         {
-            isUserUpdated = _userRepository.UpdateUser(user);
+            Assert.IsTrue(_userRepository.UpdateUser(user));
         }
         [Then(@"The user is successfully updated")]
         public void ThenTheUserIsSuccessfullyUpdated()
         {
-            Assert.IsTrue(isUserUpdated);
+            Assert.IsTrue(true);
+        }
+
+        private static Random random = new Random();
+        private static string GenerateRandomString(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

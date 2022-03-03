@@ -9,9 +9,16 @@ namespace BuisnessLogic.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        private readonly IDatabaseConnection _connection;
+        private readonly DatabaseContext _dbContext;
+
+        public AccountRepository(IDatabaseConnection connection, bool isTest = false)
+        {
+            _dbContext = (isTest ? connection.TestDatabaseContext : connection.DatabaseContext);
+        }
+
         public Account GetAccount(Guid id)
         {
-            using var _dbContext = new DatabaseContext();
             return _dbContext.Accounts
                 .Where(a => a.AccountId.Equals(id))
                 .Include(a => a.User)
@@ -20,7 +27,6 @@ namespace BuisnessLogic.Repository
 
         public Account GetAccountByUserId(Guid id)
         {
-            using var _dbContext = new DatabaseContext();
             return _dbContext.Accounts
                 .Where(a => a.UserId.Equals(id))
                 .Include(a => a.User)
@@ -29,7 +35,6 @@ namespace BuisnessLogic.Repository
 
         public List<Account> GetAccounts()
         {
-            using var _dbContext = new DatabaseContext();
             return _dbContext.Accounts
                 .Include(a => a.User)
                 .ToList();
@@ -37,8 +42,6 @@ namespace BuisnessLogic.Repository
 
         public bool UpdateAccount(Account accountModel)
         {
-            using var _dbContext = new DatabaseContext();
-
             var account = _dbContext.Accounts.FirstOrDefault(a => a.AccountId.Equals(accountModel.UserId));
             if (account == null)
             {
@@ -48,6 +51,19 @@ namespace BuisnessLogic.Repository
             account.Points = accountModel.Points;
 
             _dbContext.Accounts.Update(account);
+            _dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteAccount(Guid id)
+        {
+            var account = _dbContext.Accounts.FirstOrDefault(a => a.AccountId.Equals(id));
+            if (account == null)
+            {
+                throw new Exception("Kontoen eksisterer ikke");
+            }
+
+            _dbContext.Accounts.Remove(account);
             _dbContext.SaveChanges();
             return true;
         }
