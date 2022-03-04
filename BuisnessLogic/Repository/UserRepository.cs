@@ -24,14 +24,14 @@ namespace BuisnessLogic.Repository
 
         public bool CreateUser(User user)
         {
-            ValidateUser(user);
-
             var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
             if (existingUser != null)
                 throw new Exception("En bruger med det brugername eksisterer allerede");
 
             if (user.UserId == Guid.Empty)
                 user.UserId = Guid.NewGuid();
+
+            ValidateUser(user);
 
             user.Password = BCryptNet.HashPassword(user.Password);
 
@@ -44,8 +44,6 @@ namespace BuisnessLogic.Repository
 
         public bool UpdateUser(User userModel)
         {
-            ValidateUser(userModel);
-
             var user = _dbContext.Users.FirstOrDefault(u => u.UserId.Equals(userModel.UserId));
             if (user == null)
             {
@@ -53,6 +51,8 @@ namespace BuisnessLogic.Repository
             }
 
             user.Username = userModel.Username;
+
+            ValidateUser(user);
 
             if (userModel.Password != null)
                 user.Password = BCryptNet.HashPassword(userModel.Password);
