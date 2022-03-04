@@ -11,6 +11,20 @@ namespace BuisnessLogic.Repository
         {
             _dbContext = (isTest ? connection.TestDatabaseContext : connection.DatabaseContext);
         }
+        public User? Login(User user)
+        {
+            var dbUser = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
+
+            if (dbUser == null)
+                return null;
+            
+            var isPasswordCorrect = BCryptNet.Verify(user.Password, dbUser.Password);
+            
+            if (isPasswordCorrect)
+                return dbUser;
+
+            return null;
+        }
 
         public User GetUser(Guid id)
         {

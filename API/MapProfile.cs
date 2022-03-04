@@ -8,12 +8,12 @@ namespace API
     {
         public MapProfile()
         {
-            CreateMap<User, JsonUser>();
-            CreateMap<JsonUser, User>();
-            CreateMap<JsonUpdateUser, User>();
+            CreateMap<User, UserModel>();
+            CreateMap<UserModel, User>();
+            CreateMap<UserModelUpdate, User>();
 
-            CreateMap<Account, JsonAccount>();
-            CreateMap<JsonAccount, Account>();
+            CreateMap<Account, AccountModel>();
+            CreateMap<AccountModel, Account>();
         }
     }
 }

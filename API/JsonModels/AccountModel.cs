@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace API.JsonModels
 {
-    public class JsonAccount
+    public class AccountModel
     {
         public Guid AccountId { get; set; }
 
@@ -11,6 +11,6 @@ namespace API.JsonModels
 
         public Guid UserId { get; set; }
 
-        public virtual JsonUser User { get; set; }
+        public virtual UserModel User { get; set; }
     }
 }

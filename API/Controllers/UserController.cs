@@ -2,6 +2,7 @@
 using AutoMapper;
 using BuisnessLogic;
 using BuisnessLogic.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,31 +22,35 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        [Route("/GetAllUsers")]
-        public ActionResult<List<JsonUser>> GetUsers()
-        {
-            var users = _userRepository.GetUsers();
-            return Ok(_mapper.Map<List<JsonUser>>(users));
-        }
-
-        [HttpGet]
-        public ActionResult<JsonUser> GetUser(Guid id)
-        {
-            var user = _userRepository.GetUser(id);
-            return Ok(_mapper.Map<JsonUser>(user));
-        }
-
         [HttpPost]
-        public ActionResult<bool> CreateUser(JsonUpdateUser jsonUpdateUser)
+        public ActionResult<bool> CreateUser(UserModelUpdate jsonUpdateUser)
         {
             var user = _mapper.Map<User>(jsonUpdateUser);
             var result = _userRepository.CreateUser(user);
             return Ok(result);
         }
 
+
+        [Authorize]
+        [HttpGet]
+        [Route("/GetAllUsers")]
+        public ActionResult<List<UserModel>> GetUsers()
+        {
+            var users = _userRepository.GetUsers();
+            return Ok(_mapper.Map<List<UserModel>>(users));
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult<UserModel> GetUser(Guid id)
+        {
+            var user = _userRepository.GetUser(id);
+            return Ok(_mapper.Map<UserModel>(user));
+        }
+
+        [Authorize]
         [HttpPut]
-        public ActionResult<bool> UpdateUser(JsonUpdateUser jsonUpdateUser)
+        public ActionResult<bool> UpdateUser(UserModelUpdate jsonUpdateUser)
         {
             var user = _mapper.Map<User>(jsonUpdateUser);
             var result = _userRepository.UpdateUser(user);

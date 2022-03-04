@@ -9,7 +9,6 @@ namespace BuisnessLogic.Repository
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly IDatabaseConnection _connection;
         private readonly DatabaseContext _dbContext;
 
         public AccountRepository(IDatabaseConnection connection, bool isTest = false)
