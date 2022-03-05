@@ -30,7 +30,7 @@ namespace API.Controllers
 
 
         [AllowAnonymous]
-        [Route("login")]
+        [Route("Login")]
         [HttpPost]
         public ActionResult<bool> Login(UserModelUpdate userModel)
         {
@@ -53,6 +53,14 @@ namespace API.Controllers
             {
                 return Unauthorized("Forkert brugernavn eller password");
             }
+        }
+
+        [Authorize]
+        [Route("Verify")]
+        [HttpGet]
+        public ActionResult<bool> Verify()
+        {
+            return Ok(true);
         }
     }
 }
