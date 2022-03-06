@@ -1,10 +1,10 @@
-using API.JsonModels;
 using AutoMapper;
 using BuisnessLogic;
 using BuisnessLogic.Repository;
 using BuisnessLogic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -60,7 +60,7 @@ namespace API
                     var accessor = provider.GetRequiredService<IHttpContextAccessor>();
                     return accessor.HttpContext.User;
                 }
-            );
+            ); 
 
             services.AddMvc().AddSessionStateTempDataProvider();
             services.AddSession();
@@ -93,10 +93,12 @@ namespace API
             app.UseCors(
                 options => options.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader()
             );
+            
+            app.UseExceptionHandler("/error");
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }

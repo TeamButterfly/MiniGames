@@ -1,4 +1,6 @@
-﻿using BCryptNet = BCrypt.Net.BCrypt;
+﻿using BuisnessLogic.Exceptions;
+using System.Net;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace BuisnessLogic.Repository
 {
@@ -40,9 +42,9 @@ namespace BuisnessLogic.Repository
         {
             ValidateUser(user);
 
-            var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
-            if (existingUser != null)
-                throw new Exception("En bruger med det brugername eksisterer allerede");
+            var usernameExist = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
+            if (usernameExist != null)
+                throw new HttpStatusException(HttpStatusCode.BadRequest, "En bruger med det brugernavn eksisterer allerede");
 
             if (user.UserId == Guid.Empty)
                 user.UserId = Guid.NewGuid();
@@ -63,7 +65,13 @@ namespace BuisnessLogic.Repository
             var user = _dbContext.Users.FirstOrDefault(u => u.UserId.Equals(userModel.UserId));
             if (user == null)
             {
-                throw new Exception("Brugeren eksisterer ikke");
+                throw new HttpStatusException(HttpStatusCode.BadRequest, "Du prøver at opdatere en bruger der ikke eksisterer!");
+            }
+
+            var usernameExist = _dbContext.Users.FirstOrDefault(u => u.Username == userModel.Username);
+            if(usernameExist != null)
+            {
+                throw new HttpStatusException(HttpStatusCode.BadRequest, "En bruger med det brugernavn eksisterer allerede");
             }
 
             user.Username = userModel.Username;
@@ -81,7 +89,7 @@ namespace BuisnessLogic.Repository
             var user = _dbContext.Users.FirstOrDefault(u => u.UserId.Equals(id));
             if (user == null)
             {
-                throw new Exception("Kontoen eksisterer ikke");
+                throw new HttpStatusException(HttpStatusCode.BadRequest, "Kontoen eksisterer ikke");
             }
 
             var account = _dbContext.Accounts.FirstOrDefault(a => a.UserId.Equals(id));
@@ -106,11 +114,11 @@ namespace BuisnessLogic.Repository
         {
             if (user.Username.Length < 3 || user.Username.Length > 20)
             {
-                throw new Exception("Brugernavnet skal være mellem 3 og 20 karakterer");
+                throw new HttpStatusException(HttpStatusCode.BadRequest, "Brugernavnet skal være mellem 3 og 20 karakterer");
             }
             if (user.Password.Length < 3 || user.Password.Length > 20)
             {
-                throw new Exception("Passwordet skal være mellem 3 og 20 karakterer");
+                throw new HttpStatusException(HttpStatusCode.BadRequest, "Passwordet skal være mellem 3 og 20 karakterer");
             }
             return true;
         }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using BuisnessLogic;
 using BuisnessLogic.Repository;
+using BuisnessLogic.Exceptions;
 using BuisnessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
