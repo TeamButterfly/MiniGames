@@ -5,7 +5,7 @@ namespace API.JsonModels
 {
     public class UserModel
     {
-        [Required(ErrorMessage = "Bruger navnet er påkrævet")]
+        [Required(ErrorMessage = "Brugernavnet er påkrævet")]
         public string Username { get; set; }
     }
 }
