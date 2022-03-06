@@ -9,8 +9,6 @@ namespace API.JsonModels
 
         public int Points { get; set; }
 
-        public Guid UserId { get; set; }
-
         public virtual UserModel User { get; set; }
     }
 }

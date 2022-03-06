@@ -2,60 +2,41 @@
 using AutoMapper;
 using BuisnessLogic;
 using BuisnessLogic.Repository;
+using BuisnessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPrincipal _principal;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IMapper mapper, IUserRepository userRepository, IPrincipal principal)
         {
-            _userRepository = userRepository;
             _mapper = mapper;
+            _userRepository = userRepository;
+            _principal = principal;
         }
 
-        [HttpPost]
-        public ActionResult<bool> CreateUser(UserModelUpdate jsonUpdateUser)
-        {
-            var user = _mapper.Map<User>(jsonUpdateUser);
-            var result = _userRepository.CreateUser(user);
-            return Ok(result);
-        }
-
-
-        [Authorize]
-        [HttpGet]
-        [Route("/GetAllUsers")]
-        public ActionResult<List<UserModel>> GetUsers()
-        {
-            var users = _userRepository.GetUsers();
-            return Ok(_mapper.Map<List<UserModel>>(users));
-        }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult<UserModel> GetUser(Guid id)
-        {
-            var user = _userRepository.GetUser(id);
-            return Ok(_mapper.Map<UserModel>(user));
-        }
-
-        [Authorize]
         [HttpPut]
         public ActionResult<bool> UpdateUser(UserModelUpdate jsonUpdateUser)
         {
             var user = _mapper.Map<User>(jsonUpdateUser);
+
+            var userId = Guid.Parse(_principal.Identity.Name);
+            user.UserId = userId;
+
             var result = _userRepository.UpdateUser(user);
             return Ok(result);
         }
     }
-
 }

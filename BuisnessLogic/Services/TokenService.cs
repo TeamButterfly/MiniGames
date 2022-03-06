@@ -14,8 +14,8 @@ namespace BuisnessLogic.Services
         public string BuildToken(string key, string issuer, string audience, User user)
         {
             var claims = new[] {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+                new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Username)
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
@@ -25,15 +25,14 @@ namespace BuisnessLogic.Services
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
 
-        public bool ValidateToken(string key, string issuer, string audience, string token)
+        public ClaimsPrincipal ValidateToken(string key, string issuer, string audience, string token)
         {
             var mySecret = Encoding.UTF8.GetBytes(key);
             var mySecurityKey = new SymmetricSecurityKey(mySecret);
             var tokenHandler = new JwtSecurityTokenHandler();
             try
             {
-                tokenHandler.ValidateToken(token,
-                new TokenValidationParameters
+                ClaimsPrincipal principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = true,
@@ -42,12 +41,12 @@ namespace BuisnessLogic.Services
                     ValidAudience = audience,
                     IssuerSigningKey = mySecurityKey,
                 }, out SecurityToken validatedToken);
+                return principal;
             }
             catch
             {
-                return false;
+                throw new UnauthorizedAccessException();
             }
-            return true;
         }
 
     }

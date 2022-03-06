@@ -18,6 +18,8 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,6 +53,15 @@ namespace API
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddTransient<ITokenService, TokenService>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IPrincipal>(
+                (provider) =>
+                {
+                    var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                    return accessor.HttpContext.User;
+                }
+            );
+
             services.AddMvc().AddSessionStateTempDataProvider();
             services.AddSession();
 
@@ -80,7 +91,7 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(
-                options => options.WithOrigins("http://localhost:8080").AllowAnyMethod()
+                options => options.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader()
             );
 
             if (env.IsDevelopment())
