@@ -1,6 +1,7 @@
 ﻿using API.JsonModels;
 using AutoMapper;
 using BuisnessLogic;
+using BuisnessLogic.Exceptions;
 using BuisnessLogic.Repository;
 using BuisnessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Net;
 
 namespace API.Controllers
 {
@@ -53,8 +55,17 @@ namespace API.Controllers
             }
             else
             {
-                return Unauthorized("Forkert brugernavn eller password");
+                throw new HttpBadRequestException("Forkert brugernavn eller password");
             }
+        }
+
+        [AllowAnonymous]
+        [Route("Register")]
+        [HttpPost]
+        public ActionResult<bool> Register(UserModelUpdate userModel)
+        {
+            _userRepository.CreateUser(_mapper.Map<User>(userModel));
+            return Ok(true);
         }
     }
 }

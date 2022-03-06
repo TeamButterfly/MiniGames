@@ -17,7 +17,8 @@ namespace API.Controllers
             var code = 500;
 
 
-            if (exception is HttpStatusException) code = 400;
+            if (exception is HttpBadRequestException) code = 400;
+            if (exception is HttpUnauthorizedException) code = 401;
 
             Response.StatusCode = code;
 
