@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//TODO: Der bliver trukket 2 liv fra hver gang der gættes forkert
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
 //TODO: Logik så der ikke kan gættes på det samme bogstav
-//TODO: Logik så der kan gættes på et helt ord
-//TODO: Skal ikke være forskel på store og små bogstaver
 
 namespace Hangman
 {
     internal class HangmanGame
     {
         string word = "Ytringsfrihed";
+        string wrongLetters;
+        string playerGuesses;
         bool[] guessword;
         Boolean isRunning = true;
         int lives = 6;
+        
 
 
 
@@ -57,44 +57,65 @@ namespace Hangman
                 }
 
             }
-            Console.WriteLine(sb.ToString() + " " + "Lives: " + lives);
+            Console.WriteLine(sb.ToString() + " " + "Lives: " + lives + wrongLetters);            
         }
 
 
+        //Is to be expanded when reading word from a file
         public void setGuesswordInitial(string word)
         {
             guessword = new bool[word.Length];
         }
 
 
-        public Boolean playerGuess(string letter)
-        {           
+        public void PlayerGuess(string letter)
+        {    
+            //Converts players guess and word to guess to uppercase
             string upperletter = letter.ToUpper();
             char guessletter = upperletter[0];
             string upperword = word.ToUpper();
-            
-            Console.WriteLine(upperword + guessletter);
-                  
 
-            if (upperword.Contains(guessletter))
+            if (playerGuesses.Contains(upperletter))
             {
-                for (int i = 0; i < word.Length; i++)
+                Console.WriteLine("You have alreadye guessed on the letter " + guessletter);
+
+                if (upperword.Contains(guessletter))
                 {
-                    if (upperword[i] == guessletter)
+                    for (int i = 0; i < word.Length; i++)
                     {
-                        guessword[i] = true;
-                    }                                   
+                        if (upperword[i] == guessletter)
+                        {
+                            guessword[i] = true;
+                        }
+                    }
+
+                    addGuess(guessletter, playerGuesses);                    
                 }
 
-                return true;
-            }
+                else
+                {
+                    addGuess(guessletter, wrongLetters);
+                    lives--;                   
+                }                               
+            }                      
+        }
 
-            else
-            {
-                lives--;
-                return false;
-            }
 
+             public void addGuess(char wrongletter, string stringToChange)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(wrongLetters);
+            sb.Append(wrongletter);
+                       
+            stringToChange = SortString(sb.ToString());                      
+        }
+
+        static string SortString(string input)
+        {
+            char[] characters = input.ToArray();
+            Array.Sort(characters);
+            return new string(characters);
         }
 
 
