@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
-//TODO: Logik så der ikke kan gættes på det samme bogstav
+//TODO: Skal kun kunne gætte på bogstaver
 
 namespace Hangman
 {
@@ -33,7 +33,9 @@ namespace Hangman
                 printGuessword();
 
                 string guessLetter = Console.ReadLine();                
-                Console.WriteLine(playerGuess(guessLetter));
+                Console.WriteLine(PlayerGuess(guessLetter));
+                Console.WriteLine("Spilleren har gættet på: " + playerGuesses);
+
                 isGameOver();
             }
         }
@@ -57,7 +59,7 @@ namespace Hangman
                 }
 
             }
-            Console.WriteLine(sb.ToString() + " " + "Lives: " + lives + wrongLetters);            
+            Console.WriteLine(sb.ToString() + " " + "Lives: " + lives + "\n Wrong guesses: " + wrongLetters);            
         }
 
 
@@ -68,17 +70,22 @@ namespace Hangman
         }
 
 
-        public void PlayerGuess(string letter)
+        public Boolean PlayerGuess(string letter)
         {    
             //Converts players guess and word to guess to uppercase
             string upperletter = letter.ToUpper();
             char guessletter = upperletter[0];
             string upperword = word.ToUpper();
 
-            if (playerGuesses.Contains(upperletter))
+
+            if (playerGuesses != null && playerGuesses.Contains(upperletter))
             {
                 Console.WriteLine("You have alreadye guessed on the letter " + guessletter);
-
+                return false;
+            }
+            else
+            {
+                playerGuesses = addGuess(guessletter, playerGuesses);
                 if (upperword.Contains(guessletter))
                 {
                     for (int i = 0; i < word.Length; i++)
@@ -88,27 +95,30 @@ namespace Hangman
                             guessword[i] = true;
                         }
                     }
-
-                    addGuess(guessletter, playerGuesses);                    
+                                       
                 }
 
                 else
                 {
-                    addGuess(guessletter, wrongLetters);
-                    lives--;                   
-                }                               
-            }                      
+                    wrongLetters = addGuess(guessletter, wrongLetters);
+
+                    lives--;
+                }
+                return true;
+            }
         }
 
 
-             public void addGuess(char wrongletter, string stringToChange)
+             public string addGuess(char guessLetter, string stringToChange)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(wrongLetters);
-            sb.Append(wrongletter);
+            sb.Append(stringToChange);
+            sb.Append(guessLetter);
                        
-            stringToChange = SortString(sb.ToString());                      
+            stringToChange = SortString(sb.ToString());
+            
+            return stringToChange;
         }
 
         static string SortString(string input)
