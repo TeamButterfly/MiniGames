@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
-//TODO: Skal kun kunne gætte på bogstaver
+//TODO: Skal kunne gætte på et helt ord
 
 namespace Hangman
 {
@@ -15,16 +16,15 @@ namespace Hangman
         string wrongLetters;
         string playerGuesses;
         bool[] guessword;
-        Boolean isRunning = true;
+        Boolean isRunning = false;
         int lives = 6;
         
-
-
 
         public void play()
         {
             //Initializes the word to guess and sets the propper length of the guessing array
             setGuesswordInitial(word);
+            isRunning = true;
 
             //Runs game
             while (isRunning)
@@ -77,35 +77,43 @@ namespace Hangman
             char guessletter = upperletter[0];
             string upperword = word.ToUpper();
 
-
-            if (playerGuesses != null && playerGuesses.Contains(upperletter))
+            if (Regex.IsMatch(upperletter, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine("You have alreadye guessed on the letter " + guessletter);
-                return false;
-            }
-            else
-            {
-                playerGuesses = addGuess(guessletter, playerGuesses);
-                if (upperword.Contains(guessletter))
+                if (playerGuesses != null && playerGuesses.Contains(upperletter))
                 {
-                    for (int i = 0; i < word.Length; i++)
-                    {
-                        if (upperword[i] == guessletter)
-                        {
-                            guessword[i] = true;
-                        }
-                    }
-                                       
+                    Console.WriteLine("You have alreadye guessed on the letter " + guessletter);
+                    return false;
                 }
-
                 else
                 {
-                    wrongLetters = addGuess(guessletter, wrongLetters);
+                    playerGuesses = addGuess(guessletter, playerGuesses);
+                    if (upperword.Contains(guessletter))
+                    {
+                        for (int i = 0; i < word.Length; i++)
+                        {
+                            if (upperword[i] == guessletter)
+                            {
+                                guessword[i] = true;
+                            }
+                        }
 
-                    lives--;
+                    }
+
+                    else
+                    {
+                        wrongLetters = addGuess(guessletter, wrongLetters);
+
+                        lives--;
+                    }
+                   
                 }
                 return true;
             }
+            else
+            {
+                Console.WriteLine("Is not a letter");
+                return false;
+            }            
         }
 
 
