@@ -4,14 +4,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{99E37B8E-32E0-4CE2-AE0D-A8FA9DE601BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73} = {B57C0EE7-0C70-4D40-A881-CCEBF796BC73}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterProject", "TesterProject\TesterProject.csproj", "{2EF8A15E-7461-42DC-8FAF-6A63C88DA08D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slide Puzzle", "Slide Puzzle\Slide Puzzle.csproj", "{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tick Tack Toe", "Tick_Tack_Toe\Tick Tack Toe.csproj", "{01AB36D7-9742-4264-AD38-5530E698FE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuisnessLogic", "BuisnessLogic\BuisnessLogic.csproj", "{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{749FE63C-9E92-4D25-AD06-902838AA0378}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hangman", "Hangman\Hangman.csproj", "{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +39,14 @@ Global
 		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EAEBDC8-C2A5-44EE-A12C-DD25A6D4544F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01AB36D7-9742-4264-AD38-5530E698FE1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B57C0EE7-0C70-4D40-A881-CCEBF796BC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

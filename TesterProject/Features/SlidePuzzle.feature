@@ -1,6 +1,5 @@
 ﻿Feature: SlidePuzzle
 
-@mytag
 Scenario: Make a move
 	Given a game is started
 	And a user wants to move a square to the "left"
