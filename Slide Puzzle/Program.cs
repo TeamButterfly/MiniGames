@@ -9,7 +9,7 @@ namespace Slide_Puzzle
         {
             Game game = new Game();
             game.setup();
-            game.display();
+            game.solution();
         }
     }
 }

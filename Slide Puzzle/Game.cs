@@ -10,54 +10,85 @@ namespace Slide_Puzzle
 {
     class Game
     {
-        int[,] array;
         int n;
+        int[] arr;
+        int[,] matrix;
+
         public void setup()
         {
-            Console.WriteLine("how big do you want it? >:)");
+            Console.WriteLine("how big do you want it? >:) it has to be squared tho");
             n = Convert.ToInt32(Console.ReadLine());
-            //int[] temp = temp[n];
 
-            for (int i = 0; i < n; i++)
-                //temp[i] = i;
+            createboard();
+            display();   
+        }
 
-            array = new int[n, n];
-            int counter = 0;
-
+        public void createboard()
+        {
+            //creating every tile
+            arr = new int[n];
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < n; j++)
+                arr[i] = i;
+            }
+
+            Random rand = new Random();
+
+            // For each spot in the array, pick
+            // a random item to swap into that spot.
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                int j = rand.Next(i, arr.Length);
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+
+            matrix = new int[n, n];
+            int counter = 0;
+
+            //creating the matrix with swapped values
+            for (int i = 0; i < Math.Sqrt(arr.Length); i++)
+            {
+                for (int j = 0; j < Math.Sqrt(arr.Length); j++)
                 {
-                    array[i, j] = counter;
+                    matrix[i, j] = arr[counter];
                     counter++;
                 }
             }
         }
 
+
         public void display()
         {
-            for (int i = 0; i < array.GetLength(0); i++)
+            //printing the matrix
+            Console.WriteLine("Board");
+            for (int row = 0; row < Math.Sqrt(arr.Length); row++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
+                for (int col = 0; col < Math.Sqrt(arr.Length); col++)
                 {
-                    Console.Write(array[i, j].ToString() + " ");
+                    Console.Write(matrix[row, col].ToString() + " ");
                 }
-                Console.WriteLine("");
+                Console.WriteLine(" ");
             }
         }
 
         public void solution()
         {
-            array = new int[n, n];
+            Console.WriteLine("solution");
+            matrix = new int[n, n];
             int counter = 0;
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < Math.Sqrt(n); i++)
             {
-                for (int j = 0; j < n; j++)
+                for (int j = 0; j < Math.Sqrt(n); j++)
                 {
-                    array[i, j] = counter;
+                    matrix[i, j] = counter;
+                    //printing the solution
+                    Console.Write(matrix[i, j] + " ");
                     counter++;
                 }
+                Console.WriteLine(" ");
             }
         }
     }
