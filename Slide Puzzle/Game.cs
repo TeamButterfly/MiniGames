@@ -8,19 +8,43 @@ using System.Threading.Tasks;
 
 namespace Slide_Puzzle
 {
+    public static class Extensions
+    {
+        public static int findIndex<T>(this T[] array, T item)
+        {
+            return Array.IndexOf(array, item);
+        }
+    }
     class Game
     {
         int n;
         int[] arr;
         int[,] matrix;
+        int[] arrSolution;
+        int[,] matrixSolution;
+        int xCoordinat, yCoordinat, xCoordinatTemp, yCoordinatTemp;
+
+        public void play()
+        {
+            while (isComplited())
+            {
+                move();
+            }
+        }
 
         public void setup()
         {
             Console.WriteLine("how big do you want it? >:) it has to be squared tho");
             n = Convert.ToInt32(Console.ReadLine());
 
+            //checks if the input is squared
+            if (!((Math.Sqrt(n) % 1) == 0))
+                setup();
+
             createboard();
-            display();   
+            display();
+            solution();
+            play();
         }
 
         public void createboard()
@@ -73,23 +97,133 @@ namespace Slide_Puzzle
             }
         }
 
+        public void move()
+        {
+            Console.WriteLine("Type the value of the tiles you want to move. It has to be neighbor with 0");
+            n = Convert.ToInt32(Console.ReadLine());
+
+            //checks if tile n is neighbor with 0, if not try again
+            swap(n);
+
+            /*if (isNeighbor(n))
+            else*/
+                move();
+        }
+
+        public bool isNeighbor(int n)
+        {
+            //getting the value 0's index
+            for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
+            {
+                for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
+                {
+                    if (matrix[x, y] == 0)
+                    {
+                        xCoordinat = x;
+                        yCoordinat = y;
+                    }
+                }
+            }
+            Console.WriteLine(xCoordinat + " " + yCoordinat);
+
+            //right
+            if (n == matrix[xCoordinat + 1, yCoordinat])
+                return true;
+            //left
+            else if (n == matrix[xCoordinat - 1, yCoordinat])
+                return true;
+            //up
+            else if(n == matrix[xCoordinat, yCoordinat +1])
+                return true;
+            //down
+            else if(n == matrix[xCoordinat, yCoordinat - 1])
+                return true;
+            else
+                return false;
+        }
+        public void swap(int n)
+        {
+            
+            //swapping n with 0
+            for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
+            {
+                for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
+                {
+                    if (matrix[x, y] == 0)
+                    {
+                        xCoordinat = x;
+                        yCoordinat = y;
+                    }
+                    if (matrix[x, y] == n)
+                    {
+                        xCoordinatTemp = x;
+                        yCoordinatTemp = y;
+                    }
+                }
+            }
+            matrix[xCoordinat,yCoordinat] = matrix[xCoordinatTemp,yCoordinatTemp];
+            matrix[xCoordinatTemp, yCoordinatTemp] = 0;
+
+            //print matrix after swap
+            Console.WriteLine("after swap");
+            for (int row = 0; row < Math.Sqrt(arr.Length); row++)
+            {
+                for (int col = 0; col < Math.Sqrt(arr.Length); col++)
+                {
+                    Console.Write(matrix[row, col].ToString() + " ");
+                }
+                Console.WriteLine(" ");
+            }
+        }
         public void solution()
         {
             Console.WriteLine("solution");
-            matrix = new int[n, n];
+            /*matrixSolution = new int[n, n];
             int counter = 0;
 
             for (int i = 0; i < Math.Sqrt(n); i++)
             {
                 for (int j = 0; j < Math.Sqrt(n); j++)
                 {
-                    matrix[i, j] = counter;
+                    matrixSolution[i, j] = counter;
                     //printing the solution
-                    Console.Write(matrix[i, j] + " ");
+                    Console.Write(matrixSolution[i, j] + " ");
+                    counter++;
+                }
+                Console.WriteLine(" ");
+            }*/
+
+            //creating every tile
+            arrSolution = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                arrSolution[i] = i + 1;
+                if (arrSolution[i] == n)
+                    arrSolution[i] = 0;
+            }
+
+            matrixSolution = new int[n, n];
+            int counter = 0;
+            for (int i = 0; i < Math.Sqrt(n); i++)
+            {
+                for (int j = 0; j < Math.Sqrt(n); j++)
+                {
+                    matrixSolution[i, j] = arrSolution[counter];
+                    //printing the solution
+                    Console.Write(matrixSolution[i, j] + " ");
                     counter++;
                 }
                 Console.WriteLine(" ");
             }
+        }
+
+        public bool isComplited()
+        {
+            if (matrix.Equals(matrixSolution)){ 
+                Console.WriteLine("what a big boi, you solved the slide puzzle!");
+                return false;
+            }
+            return true;
         }
     }
 }
