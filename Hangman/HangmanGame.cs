@@ -12,18 +12,31 @@ namespace Hangman
 {
     internal class HangmanGame
     {
-        string word = "Ytringsfrihed";
+        string word;
         string wrongLetters;
         string playerGuesses;
         bool[] guessword;
         Boolean isRunning = false;
         int lives = 6;
-        
+
+
+        List<String> words = new List<string> {
+            "Ytringsfrihed",
+            "Jantelov",
+            "Grimrian",
+            "Viking",
+            "Lærer",
+            "Studerende"
+        };
+
 
         public void play()
         {
             //Initializes the word to guess and sets the propper length of the guessing array
-            setGuesswordInitial(word);
+            setGuesswordInitial();
+
+            Console.WriteLine(word);
+
             isRunning = true;
 
             //Runs game
@@ -35,7 +48,7 @@ namespace Hangman
                 string guessLetter = Console.ReadLine();                
                 Console.WriteLine(PlayerGuess(guessLetter));
                 Console.WriteLine("Spilleren har gættet på: " + playerGuesses);
-
+                
                 isGameOver();
             }
         }
@@ -62,10 +75,19 @@ namespace Hangman
             Console.WriteLine(sb.ToString() + " " + "Lives: " + lives + "\n Wrong guesses: " + wrongLetters);            
         }
 
+        public string getRandomWord()
+        {
+            int listLenght = words.Count-1;
+            Random random = new Random();
+                      
+            return words[random.Next(0, listLenght)];
+        }
+
 
         //Is to be expanded when reading word from a file
-        public void setGuesswordInitial(string word)
-        {
+        public void setGuesswordInitial()
+        {            
+            word = getRandomWord();
             guessword = new bool[word.Length];
         }
 
