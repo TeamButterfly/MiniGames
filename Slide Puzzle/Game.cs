@@ -103,16 +103,16 @@ namespace Slide_Puzzle
             n = Convert.ToInt32(Console.ReadLine());
 
             //checks if tile n is neighbor with 0, if not try again
-            swap(n);
 
-            /*if (isNeighbor(n))
-            else*/
+            if (isNeighbor(n))
+                swap(n);
+            else 
                 move();
         }
 
         public bool isNeighbor(int n)
         {
-            //getting the value 0's index
+            //getting the position of 0
             for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
             {
                 for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
@@ -124,20 +124,35 @@ namespace Slide_Puzzle
                     }
                 }
             }
-            Console.WriteLine(xCoordinat + " " + yCoordinat);
+            Console.WriteLine(matrix[xCoordinat + 1, yCoordinat] + " " +
+                matrix[xCoordinat - 1, yCoordinat] + " " +
+                matrix[xCoordinat, yCoordinat + 1] + " " +
+                matrix[xCoordinat, yCoordinat - 1]);
 
-            //right
-            if (n == matrix[xCoordinat + 1, yCoordinat])
+            List<int> isBoardEdge = new List<int>();
+            //finding board edge
+            for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
+            {
+                for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
+                {
+                    if((y == 0 || 
+                        x == (n - 1) || 
+                        (x == 0 && y != 3) || 
+                        y == (n - 1)))
+                        isBoardEdge.Add(matrix[x,y]);
+                }
+            }
+
+
+            //wrong 
+            if (n == matrix[xCoordinat + 1, yCoordinat] ||
+                n == matrix[xCoordinat - 1, yCoordinat] ||
+                n == matrix[xCoordinat, yCoordinat + 1] ||
+                n == matrix[xCoordinat, yCoordinat - 1])
+            {
+                
                 return true;
-            //left
-            else if (n == matrix[xCoordinat - 1, yCoordinat])
-                return true;
-            //up
-            else if(n == matrix[xCoordinat, yCoordinat +1])
-                return true;
-            //down
-            else if(n == matrix[xCoordinat, yCoordinat - 1])
-                return true;
+            }
             else
                 return false;
         }
@@ -163,17 +178,6 @@ namespace Slide_Puzzle
             }
             matrix[xCoordinat,yCoordinat] = matrix[xCoordinatTemp,yCoordinatTemp];
             matrix[xCoordinatTemp, yCoordinatTemp] = 0;
-
-            //print matrix after swap
-            Console.WriteLine("after swap");
-            for (int row = 0; row < Math.Sqrt(arr.Length); row++)
-            {
-                for (int col = 0; col < Math.Sqrt(arr.Length); col++)
-                {
-                    Console.Write(matrix[row, col].ToString() + " ");
-                }
-                Console.WriteLine(" ");
-            }
         }
         public void solution()
         {
