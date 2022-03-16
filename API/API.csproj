@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuisnessLogic\BuisnessLogic.csproj" />
+    <ProjectReference Include="..\Slide Puzzle\Slide Puzzle.csproj" />
   </ItemGroup>
 
 </Project>
