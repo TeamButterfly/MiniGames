@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hangman
 {
-    internal class HangmanGame
+    public class HangmanGame
     {
         string word;
         string wrongLetters;
