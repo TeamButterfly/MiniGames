@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
 //TODO: Skal kunne gætte på et helt ord
+//TODO: Kan ikke håndtere blankt indput
+//TODO: Skal der være en initiel instruktionsbesked?
+//TODO: Forskellig besked når der er vundet eller tabt
 
 namespace Hangman
 {
-    internal class HangmanGame
+    public class HangmanGame
     {
         string word;
         string wrongLetters;
@@ -26,7 +29,10 @@ namespace Hangman
             "Grimrian",
             "Viking",
             "Lærer",
-            "Studerende"
+            "Studerende",
+            "Fodbold",
+            "Håndbold",
+            "Sport"
         };
 
 
@@ -35,22 +41,27 @@ namespace Hangman
             //Initializes the word to guess and sets the propper length of the guessing array
             setGuesswordInitial();
 
-            Console.WriteLine(word);
+            //Console.WriteLine(word);
 
             isRunning = true;
 
             //Runs game
             while (isRunning)
             {
-                Console.WriteLine(word);
-                printGuessword();
-
-                string guessLetter = Console.ReadLine();                
-                Console.WriteLine(PlayerGuess(guessLetter));
-                Console.WriteLine("Spilleren har gættet på: " + playerGuesses);
-                
-                isGameOver();
+                playRound();
             }
+        }
+
+        public void playRound()
+        {
+            printGuessword();
+
+            string guessLetter = Console.ReadLine();
+            PlayerGuess(guessLetter);
+            
+            Console.WriteLine("Player has made following guesses: " + playerGuesses);
+
+            isGameOver();
         }
 
         public void printGuessword()
