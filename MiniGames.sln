@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hangman", "Hangman\Hangman.csproj", "{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangman", "Hangman\Hangman.csproj", "{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{D0718D6E-DAA7-430D-BB21-546BBCC9478A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F05D6A58-A055-49BB-9204-3D8C6FCFBFD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0718D6E-DAA7-430D-BB21-546BBCC9478A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0718D6E-DAA7-430D-BB21-546BBCC9478A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0718D6E-DAA7-430D-BB21-546BBCC9478A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0718D6E-DAA7-430D-BB21-546BBCC9478A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
