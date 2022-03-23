@@ -5,7 +5,7 @@ namespace BuisnessLogic
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; } 
         public DbSet<Account> Accounts { get; set; }
 
         protected readonly IConfiguration _configuration;
