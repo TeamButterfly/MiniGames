@@ -15,7 +15,7 @@ namespace Slide_Puzzle
             return Array.IndexOf(array, item);
         }
     }
-    class Game
+    public class Game
     {
         int n;
         int[] arr;
@@ -141,6 +141,11 @@ namespace Slide_Puzzle
                         y == (n - 1)))
                         isBoardEdge.Add(matrix[x,y]);
                 }
+            }
+
+            if(matrix.Length - 1)
+            {
+
             }
 
 
