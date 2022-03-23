@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace BuisnessLogic
 {
     public class DatabaseContext : DbContext
     {
-        private static readonly string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Minigame;Trusted_Connection=True;";
-
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
 
+        protected readonly IConfiguration _configuration;
+
+        public DatabaseContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MiniGamesDatabase"));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,10 +33,13 @@ namespace BuisnessLogic
 
     public class TestDatabaseContext : DatabaseContext
     {
-        private static readonly string ConnectionStringTest = "Server=(localdb)\\mssqllocaldb;Database=Minigame_Test;Trusted_Connection=True;";
+        public TestDatabaseContext(IConfiguration configuration) : base(configuration)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConnectionStringTest);
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MiniGamesTestDatabase"));
         }
     }
 }
