@@ -6,8 +6,4 @@
     <RootNamespace>Slide_Puzzle</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj" />
-  </ItemGroup>
-
 </Project>

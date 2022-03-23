@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BuisnessLogic\BuisnessLogic.csproj" />
     <ProjectReference Include="..\Hangman\Hangman.csproj" />
+    <ProjectReference Include="..\Slide Puzzle\Slide Puzzle.csproj" />
   </ItemGroup>
 
 </Project>
