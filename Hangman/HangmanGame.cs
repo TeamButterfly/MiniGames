@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
 //TODO: Skal kunne gætte på et helt ord
-//TODO: Kan ikke håndtere blankt indput
 //TODO: Skal der være en initiel instruktionsbesked?
-//TODO: Forskellig besked når der er vundet eller tabt
+//TODO: Skal man kunne spille multiplayer?
 
 namespace Hangman
 {
@@ -20,7 +19,7 @@ namespace Hangman
         string playerGuesses;
         bool[] guessword;
         Boolean isRunning = false;
-        int lives = 6;
+        int lives = 7;
 
 
         List<String> words = new List<string> {
@@ -41,8 +40,6 @@ namespace Hangman
             //Initializes the word to guess and sets the propper length of the guessing array
             setGuesswordInitial();
 
-            //Console.WriteLine(word);
-
             isRunning = true;
 
             //Runs game
@@ -54,13 +51,17 @@ namespace Hangman
 
         public void playRound()
         {
+            
+            //Prints the word with the player guesses
             printGuessword();
 
+            //Takes first letter in the user input
             string guessLetter = Console.ReadLine();
-            PlayerGuess(guessLetter);
-            
-            Console.WriteLine("Player has made following guesses: " + playerGuesses);
 
+            //Update with the user guess
+            Console.Clear();
+            PlayerGuess(guessLetter);
+            Console.WriteLine("Player has made following guesses: " + playerGuesses);
             isGameOver();
         }
 
@@ -104,49 +105,61 @@ namespace Hangman
 
 
         public Boolean PlayerGuess(string letter)
-        {    
+        {
+
             //Converts players guess and word to guess to uppercase
             string upperletter = letter.ToUpper();
-            char guessletter = upperletter[0];
-            string upperword = word.ToUpper();
 
-            if (Regex.IsMatch(upperletter, @"^[a-zA-Z]+$"))
+            if (!string.IsNullOrEmpty(letter))
             {
-                if (playerGuesses != null && playerGuesses.Contains(upperletter))
+
+
+                char guessletter = upperletter[0];
+                string upperword = word.ToUpper();
+
+                if (Regex.IsMatch(upperletter, @"^[a-åA-å]+$"))
                 {
-                    Console.WriteLine("You have alreadye guessed on the letter " + guessletter);
-                    return false;
-                }
-                else
-                {
-                    playerGuesses = addGuess(guessletter, playerGuesses);
-                    if (upperword.Contains(guessletter))
+                    if (playerGuesses != null && playerGuesses.Contains(upperletter))
                     {
-                        for (int i = 0; i < word.Length; i++)
+                        Console.WriteLine("You have already guessed on the letter " + guessletter);
+                        return false;
+                    }
+                    else
+                    {
+                        playerGuesses = addGuess(guessletter, playerGuesses);
+                        if (upperword.Contains(guessletter))
                         {
-                            if (upperword[i] == guessletter)
+                            for (int i = 0; i < word.Length; i++)
                             {
-                                guessword[i] = true;
+                                if (upperword[i] == guessletter)
+                                {
+                                    guessword[i] = true;
+                                }
                             }
+
+                        }
+
+                        else
+                        {
+                            wrongLetters = addGuess(guessletter, wrongLetters);
+
+                            lives--;
                         }
 
                     }
-
-                    else
-                    {
-                        wrongLetters = addGuess(guessletter, wrongLetters);
-
-                        lives--;
-                    }
-                   
+                    return true;
                 }
-                return true;
+                else
+                {
+                    Console.WriteLine("Is not a letter");
+                    return false;
+                }
             }
             else
             {
-                Console.WriteLine("Is not a letter");
+                Console.WriteLine("U must enter a guess");
                 return false;
-            }            
+            }
         }
 
 
@@ -172,6 +185,11 @@ namespace Hangman
 
         public void isGameOver()
         {
+            if (lives <= 0)
+            {
+                Console.WriteLine(gameOverMessage());
+                return;
+            }
             for (int i = 0; i < guessword.Length; i++)
             {
                 if (guessword[i] == false)
@@ -183,7 +201,34 @@ namespace Hangman
                 }
             }
             isRunning = false;
-            Console.Write("Game is over");
+            Console.Write("Game is Won");
+        }
+
+        /* Works
+        
+        public void isGameOver()
+        {
+            for (int i = 0; i < guessword.Length; i++)
+            {
+                if (guessword[i] == false)
+                {
+                    if (lives > 0)
+                    {
+                        return;
+                    }
+                }
+            }
+            isRunning = false;
+            Console.Write("Game is Won");
+        }
+        */
+
+        private String gameOverMessage()
+        {
+            String gameOverMessage = "U have lost the game";
+            isRunning = false;
+            return gameOverMessage;
+            
         }
     }
 
