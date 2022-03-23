@@ -55,7 +55,7 @@ namespace Hangman
         public void playRound()
         {
             
-            //Prints the word with the player guesses
+            //Prints the word with the player guesses   
             printGuessword();
 
             //Takes first letter in the user input
@@ -188,7 +188,7 @@ namespace Hangman
             if (lives <= 0)
             {
                 Console.Clear();
-                Console.WriteLine(gameOverMessage());
+                Console.WriteLine(gameLostMessage());
                 return;
             }
             for (int i = 0; i < guessword.Length; i++)
@@ -201,7 +201,7 @@ namespace Hangman
 
             //Only reaches here if game is won
 
-            isRunning = false;
+            Stop();
             Console.Clear();
             Console.Write("Game is Won");
         }
@@ -225,10 +225,10 @@ namespace Hangman
         }
         */
 
-        private String gameOverMessage()
+        private String gameLostMessage()
         {
             String gameOverMessage = "U have lost the game";
-            isRunning = false;
+            Stop();
             return gameOverMessage;
             
         }
@@ -236,6 +236,11 @@ namespace Hangman
         private void guessWord()
         {
             //TODO:Fix
+        }
+
+        private void Stop()
+        {
+            isRunning = false;
         }
     }
 
