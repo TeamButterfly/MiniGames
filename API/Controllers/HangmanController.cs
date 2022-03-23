@@ -16,7 +16,7 @@ namespace API.Controllers
         private readonly IAccountRepository _accountRepository;
         private readonly IPrincipal _principal;
         private readonly IMapper _mapper;
-
+         
         private readonly HangmanGame _hangmanGame;
 
         public HangmanController(IMapper mapper, IAccountRepository accountRepository, IPrincipal principal, HangmanGame hangmanGame)
