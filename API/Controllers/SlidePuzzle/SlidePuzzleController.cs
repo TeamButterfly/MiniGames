@@ -26,12 +26,36 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        public ActionResult<SlidePuzzleModel> StartGame()
+        {
+            var game = new Game();
+            game.setup();
+            return Ok(new SlidePuzzleModel());
+        }
+
+        [HttpPost]
         public ActionResult<SlidePuzzleModel> GivePoints()
         {
             var account = _accountRepository.GetAccountByUserId(Guid.Parse(_principal.Identity.Name));
             account.Points += 2;
             _accountRepository.UpdateAccount(account);
             var game = new Game();
+            return Ok(new SlidePuzzleModel());
+        }
+
+        [HttpPost]
+        public ActionResult<SlidePuzzleModel> CountMoves()
+        {
+            var game = new Game();
+            game.getAmountOfMoves();
+            return Ok(new SlidePuzzleModel());
+        }
+
+        [HttpPost]
+        public ActionResult<SlidePuzzleModel> Move()
+        {
+            var game = new Game();
+            game.move();
             return Ok(new SlidePuzzleModel());
         }
     }
