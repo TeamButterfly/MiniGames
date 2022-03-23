@@ -143,10 +143,10 @@ namespace Slide_Puzzle
                 }
             }
 
-            if(matrix.Length - 1)
-            {
+            //if(matrix.Length - 1)
+            //{
 
-            }
+            //}
 
 
             //wrong 
