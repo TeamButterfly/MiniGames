@@ -31,7 +31,10 @@ namespace Hangman
             "Studerende",
             "Fodbold",
             "Håndbold",
-            "Sport"
+            "Sport",
+            "Arbejde",
+            "Surfer",
+            "Atlet"
         };
 
 
@@ -71,8 +74,6 @@ namespace Hangman
 
             for (int i = 0; i < word.Length; i++)
             {
-                if (guessword[i] != null)
-                {
                     if (guessword[i] == false)
                     {
                         sb.Append(" - ");
@@ -80,8 +81,7 @@ namespace Hangman
                     else
                     {
                         sb.Append(" " + word[i] + " ");
-                    }
-                }
+                    }            
 
             }
             Console.WriteLine(sb.ToString() + " " + "Lives: " + lives + "\n Wrong guesses: " + wrongLetters);            
@@ -187,6 +187,7 @@ namespace Hangman
         {
             if (lives <= 0)
             {
+                Console.Clear();
                 Console.WriteLine(gameOverMessage());
                 return;
             }
@@ -194,13 +195,14 @@ namespace Hangman
             {
                 if (guessword[i] == false)
                 {
-                    if (lives > 0)
-                    {
-                        return;
-                    }
+                  return;                    
                 }
             }
+
+            //Only reaches here if game is won
+
             isRunning = false;
+            Console.Clear();
             Console.Write("Game is Won");
         }
 
@@ -229,6 +231,11 @@ namespace Hangman
             isRunning = false;
             return gameOverMessage;
             
+        }
+
+        private void guessWord()
+        {
+            //TODO:Fix
         }
     }
 
