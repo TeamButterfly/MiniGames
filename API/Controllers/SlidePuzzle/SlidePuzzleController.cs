@@ -19,12 +19,13 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IPrincipal _principal;
 
-        public SlidePuzzleController(IMapper mapper,IAccountRepository accountRepository)
+        public SlidePuzzleController(IMapper mapper, IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
         }
 
+        [Route("Start")]
         [HttpPost]
         public ActionResult<SlidePuzzleModel> StartGame()
         {
@@ -33,25 +34,26 @@ namespace API.Controllers
             return Ok(new SlidePuzzleModel());
         }
 
-        [HttpPost]
-        public ActionResult<SlidePuzzleModel> GivePoints()
-        {
-            var account = _accountRepository.GetAccountByUserId(Guid.Parse(_principal.Identity.Name));
-            account.Points += 2;
-            _accountRepository.UpdateAccount(account);
-            var game = new Game();
-            return Ok(new SlidePuzzleModel());
-        }
+        //[Route("/points")]
+        //[HttpPost]
+        //public ActionResult<SlidePuzzleModel> GivePoints()
+        //{
+        //    var account = _accountRepository.GetAccountByUserId(Guid.Parse(_principal.Identity.Name));
+        //    var game = new Game();
+        //    account.Points += game.getPoints();
+        //    _accountRepository.UpdateAccount(account);
+        //    return Ok(new SlidePuzzleModel());
+        //}
 
-        [HttpPost]
-        public ActionResult<SlidePuzzleModel> CountMoves()
-        {
-            var game = new Game();
-            game.getAmountOfMoves();
-            return Ok(new SlidePuzzleModel());
-        }
+        //[HttpPost]
+        //public ActionResult<SlidePuzzleModel> CountMoves()
+        //{
+        //    var game = new Game();
+        //    game.getAmountOfMoves();
+        //    return Ok(new SlidePuzzleModel());
+        //}
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult<SlidePuzzleModel> Move()
         {
             var game = new Game();

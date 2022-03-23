@@ -184,9 +184,9 @@ namespace Slide_Puzzle
             matrix[xCoordinat,yCoordinat] = matrix[xCoordinatTemp,yCoordinatTemp];
             matrix[xCoordinatTemp, yCoordinatTemp] = 0;
         }
-        public void getAmountOfMoves()
+        public int getAmountOfMoves()
         {
-            amountOfMoves =+ 1;
+            return amountOfMoves =+ 1;
         }
         public void solution()
         {
@@ -229,7 +229,6 @@ namespace Slide_Puzzle
                 Console.WriteLine(" ");
             }
         }
-
         public bool isComplited()
         {
             if (matrix.Equals(matrixSolution)){ 
@@ -237,6 +236,11 @@ namespace Slide_Puzzle
                 return false;
             }
             return true;
+        }
+
+        public void getPoints()
+        {
+            getAmountOfMoves();
         }
     }
 }
