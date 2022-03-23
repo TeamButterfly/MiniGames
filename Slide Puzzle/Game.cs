@@ -17,7 +17,7 @@ namespace Slide_Puzzle
     }
     public class Game
     {
-        int n;
+        int n, amountOfMoves;
         int[] arr;
         int[,] matrix;
         int[] arrSolution;
@@ -163,7 +163,7 @@ namespace Slide_Puzzle
         }
         public void swap(int n)
         {
-            
+            getAmountOfMoves();
             //swapping n with 0
             for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
             {
@@ -183,6 +183,10 @@ namespace Slide_Puzzle
             }
             matrix[xCoordinat,yCoordinat] = matrix[xCoordinatTemp,yCoordinatTemp];
             matrix[xCoordinatTemp, yCoordinatTemp] = 0;
+        }
+        public void getAmountOfMoves()
+        {
+            amountOfMoves =+ 1;
         }
         public void solution()
         {
