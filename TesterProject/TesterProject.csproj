@@ -31,5 +31,22 @@
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
   </ItemGroup>
+	
+	
+
+  <ItemGroup>
+    <Compile Update="Features\SlidePuzzle.feature.cs">
+      <DependentUpon>SlidePuzzle.feature</DependentUpon>
+    </Compile>
+  </ItemGroup>
+	
+	
+
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="Features\SlidePuzzle.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+  </ItemGroup>
 
 </Project>

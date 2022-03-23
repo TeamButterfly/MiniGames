@@ -1,4 +1,6 @@
-﻿namespace BuisnessLogic.Repository
+﻿using Microsoft.Extensions.Configuration;
+
+namespace BuisnessLogic.Repository
 {
     public interface IDatabaseConnection
     {
@@ -10,10 +12,10 @@
         private readonly DatabaseContext _context;
         private readonly DatabaseContext _testContext;
 
-        public DatabaseConnection()
+        public DatabaseConnection(IConfiguration configuration)
         {
-            _context = new DatabaseContext();
-            _testContext = new TestDatabaseContext();
+            _context = new DatabaseContext(configuration);
+            _testContext = new TestDatabaseContext(configuration);
         }
 
         public DatabaseContext DatabaseContext { get { return _context; } }

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections;
 
-namespace Slide_Puzzle
+namespace Hangman
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
-            game.setup();
+            HangmanGame game = new HangmanGame();
+            game.play();
         }
     }
 }
