@@ -7,8 +7,9 @@ namespace Slide_Puzzle
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
+            SPGame game = new SPGame();
             game.setup();
+            game.play();
         }
     }
 }

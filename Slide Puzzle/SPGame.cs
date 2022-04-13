@@ -15,7 +15,7 @@ namespace Slide_Puzzle
             return Array.IndexOf(array, item);
         }
     }
-    public class Game
+    public class SPGame
     {
         int n;
         int[] arr, sol;
@@ -37,12 +37,14 @@ namespace Slide_Puzzle
 
             //checks if the input is squared
             if (!((Math.Sqrt(n) % 1) == 0))
+            {
+                Console.WriteLine("The size isn't a squared size, try again");
                 setup();
+            }
 
             createboard();
             display();
             solution();
-            play();
         }
 
         public void createboard()
@@ -248,9 +250,9 @@ namespace Slide_Puzzle
             return true;
         }
 
-        public void getPoints()
+        public int getPoints()
         {
-            countAmountOfMoves();
+            return amountOfMoves/2;
         }
     }
 }
