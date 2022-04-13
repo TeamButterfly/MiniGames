@@ -87,11 +87,11 @@ namespace Slide_Puzzle
         public void move()
         {
             Console.WriteLine("Type the value of the tiles you want to move. It has to be neighbor with 0");
-            n = Convert.ToInt32(Console.ReadLine());
+            int swapvalue = Convert.ToInt32(Console.ReadLine());
 
             //checks if tile n is neighbor with 0, if not try again
-            if (isNeighbor(n))
-                swap(n);
+            if (isNeighbor(swapvalue))
+                swap(swapvalue);
             else
             {
                 Console.WriteLine("The tile you want to move isn't neighbor with 0, try again");
@@ -99,7 +99,7 @@ namespace Slide_Puzzle
             }
         }
 
-        public bool isNeighbor(int n)
+        public bool isNeighbor(int swapvalue)
         {
             List<int> zerosNeighbors = new List<int>();
             int s = arr.Length;
@@ -109,29 +109,32 @@ namespace Slide_Puzzle
             for (int i = 0; i<s; i++)
             {
                 //first row that isn't the edges
-                if(i < ss && ((i%ss !=0) || (i % ss !=n-1))) 
+                if(i < ss && ((i%ss !=0) || (i % ss !=n-1)) && arr[i] == 0) 
                 {
-                    if(arr[i] == 0)
-                    {
-                        zerosNeighbors.Add(arr[i - 1]);
-                        zerosNeighbors.Add(arr[i + 1]);
-                        zerosNeighbors.Add(arr[i + ss]);
-                    }
                     //left corner
                     if(arr[0] == 0)
                     {
                         zerosNeighbors.Add(arr[i + 1]);
                         zerosNeighbors.Add(arr[i + ss]);
+                        break;
                     }
                     //right corner
                     if (arr[ss-1] == 0)
                     {
                         zerosNeighbors.Add(arr[i - 1]);
                         zerosNeighbors.Add(arr[i + ss]);
+                        break;
+                    }
+                    if (arr[i] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                        break;
                     }
                 }
                 //middle, but not the left and right edges
-                if (i>ss && i<s-ss && arr[i] == 0)
+                if (i>=ss && i<s-ss && arr[i] == 0)
                 {
                     //left
                     if(i % ss == 0)
@@ -139,66 +142,79 @@ namespace Slide_Puzzle
                         zerosNeighbors.Add(arr[i + 1]);
                         zerosNeighbors.Add(arr[i - ss]);
                         zerosNeighbors.Add(arr[i + ss]);
+                        break;
                     }
                     //right
-                    if(i % ss != ss - 1)
+                    if (i % ss == ss - 1)
                     {
                         zerosNeighbors.Add(arr[i - 1]);
                         zerosNeighbors.Add(arr[i - ss]);
                         zerosNeighbors.Add(arr[i + ss]);
+                        break;
                     }
-                    zerosNeighbors.Add(arr[i - 1]);
-                    zerosNeighbors.Add(arr[i + 1]);
-                    zerosNeighbors.Add(arr[i - ss]);
-                    zerosNeighbors.Add(arr[i + ss]);
+                    else
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                        break;
+                    }
                 }
                 //last row that isn't the edges
-                if (i>(s - ss))
-                {
+                if (i >= (s - ss))
+                { 
+                    //left corner
+                    if (i == s-ss && arr[i] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                        break;
+                    }
+                    //right corner
+                    if (i == s - 1 && arr[i] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                        break;
+                    }
                     if (arr[i] == 0)
                     {
                         zerosNeighbors.Add(arr[i - 1]);
                         zerosNeighbors.Add(arr[i + 1]);
                         zerosNeighbors.Add(arr[i - ss]);
-                    }
-                    //left corner
-                    if (arr[s-ss] == 0)
-                    {
-                        zerosNeighbors.Add(arr[i + 1]);
-                        zerosNeighbors.Add(arr[i - ss]);
-                    }
-                    //right corner
-                    if (arr[s - 1] == 0)
-                    {
-                        zerosNeighbors.Add(arr[i - 1]);
-                        zerosNeighbors.Add(arr[i - ss]);
+                        break;
                     }
                 }
             }
 
-            if(zerosNeighbors.Contains(n))
+            if(zerosNeighbors.Contains(swapvalue))
                 return true;
             else
                 return false;
 
         }
-        public void swap(int n)
+        public void swap(int swapvalue)
         {
             getAmountOfMoves();
             //swapping n with 0
             int temp;
             int zero = 0;
-            for(int i = 0; i < n; i++)
-            {
+            int swapindex = 0;
+            for (int i = 0; i < arr.Length; i++)
+             {
                 if (arr[i] == 0)
                 {
                     zero = i;
-                    break;
                 }
+                if (arr[i] == swapvalue)
+                {
+                    swapindex = i;
+                }
+
             }
-            temp = zero;
-            arr[zero] = n;
-            arr[n] = temp;
+            arr[zero] = swapvalue;
+            arr[swapindex] = 0;
 
             display();
         }
@@ -233,7 +249,7 @@ namespace Slide_Puzzle
         }
         public bool isComplited()
         {
-            if (arr.Equals(sol))
+            if (arr.SequenceEqual(sol))
             {
                 Console.WriteLine("what a big boi, you solved the slide puzzle!");
                 return false;
