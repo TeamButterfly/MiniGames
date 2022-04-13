@@ -17,11 +17,13 @@ namespace Slide_Puzzle
     }
     public class Game
     {
-        int n, amountOfMoves;
+        int n;
         int[] arr, sol;
+        int amountOfMoves;
 
         public void play()
         {
+            amountOfMoves = 0;
             while (isComplited())
             {
                 move();
@@ -196,7 +198,7 @@ namespace Slide_Puzzle
         }
         public void swap(int swapvalue)
         {
-            getAmountOfMoves();
+            countAmountOfMoves();
             //swapping n with 0
             int temp;
             int zero = 0;
@@ -218,13 +220,12 @@ namespace Slide_Puzzle
 
             display();
         }
-        public int getAmountOfMoves()
+        public void countAmountOfMoves()
         {
-            return amountOfMoves =+ 1;
+            amountOfMoves += 1;
         }
         public void solution()
         {
-            Console.WriteLine("solution");
             int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
             sol = new int[n];
 
@@ -235,23 +236,13 @@ namespace Slide_Puzzle
                 else
                     sol[i] = i+1;
             }
-
-            //printing the solution
-            for (int i = 0; i < n; i++)
-            {
-                if (i % ss == 0 && i != 0)
-                {
-                    Console.WriteLine(" ");
-                }
-                Console.Write(sol[i] + " ");
-            }
-            Console.WriteLine(" ");
         }
         public bool isComplited()
         {
             if (arr.SequenceEqual(sol))
             {
                 Console.WriteLine("what a big boi, you solved the slide puzzle!");
+                Console.WriteLine("You used " + amountOfMoves + " moves, to solve the puzzle");
                 return false;
             }
             return true;
@@ -259,7 +250,7 @@ namespace Slide_Puzzle
 
         public void getPoints()
         {
-            getAmountOfMoves();
+            countAmountOfMoves();
         }
     }
 }
