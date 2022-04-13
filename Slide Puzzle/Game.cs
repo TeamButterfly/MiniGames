@@ -18,11 +18,7 @@ namespace Slide_Puzzle
     public class Game
     {
         int n, amountOfMoves;
-        int[] arr;
-        int[,] matrix;
-        int[] arrSolution;
-        int[,] matrixSolution;
-        int xCoordinat, yCoordinat, xCoordinatTemp, yCoordinatTemp;
+        int[] arr, sol;
 
         public void play()
         {
@@ -68,33 +64,24 @@ namespace Slide_Puzzle
                 arr[j] = temp;
             }
 
-            matrix = new int[n, n];
-            int counter = 0;
-
-            //creating the matrix with swapped values
-            for (int i = 0; i < Math.Sqrt(arr.Length); i++)
-            {
-                for (int j = 0; j < Math.Sqrt(arr.Length); j++)
-                {
-                    matrix[i, j] = arr[counter];
-                    counter++;
-                }
-            }
         }
 
 
         public void display()
         {
-            //printing the matrix
+            int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
+
+            //printing the matrix board
             Console.WriteLine("Board");
-            for (int row = 0; row < Math.Sqrt(arr.Length); row++)
+            for(int i = 0; i < n; i++)
             {
-                for (int col = 0; col < Math.Sqrt(arr.Length); col++)
+                if (i % ss == 0 && i != 0)
                 {
-                    Console.Write(matrix[row, col].ToString() + " ");
+                    Console.WriteLine(" ");
                 }
-                Console.WriteLine(" ");
+                Console.Write(arr[i] + " ");
             }
+            Console.WriteLine(" ");
         }
 
         public void move()
@@ -103,86 +90,117 @@ namespace Slide_Puzzle
             n = Convert.ToInt32(Console.ReadLine());
 
             //checks if tile n is neighbor with 0, if not try again
-
             if (isNeighbor(n))
                 swap(n);
-            else 
+            else
+            {
+                Console.WriteLine("The tile you want to move isn't neighbor with 0, try again");
                 move();
+            }
         }
 
         public bool isNeighbor(int n)
         {
-            //getting the position of 0
-            for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
+            List<int> zerosNeighbors = new List<int>();
+            int s = arr.Length;
+            int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
+
+            //find neighbors
+            for (int i = 0; i<s; i++)
             {
-                for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
+                //first row that isn't the edges
+                if(i < ss && ((i%ss !=0) || (i % ss !=n-1))) 
                 {
-                    if (matrix[x, y] == 0)
+                    if(arr[i] == 0)
                     {
-                        xCoordinat = x;
-                        yCoordinat = y;
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                    }
+                    //left corner
+                    if(arr[0] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                    }
+                    //right corner
+                    if (arr[ss-1] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                    }
+                }
+                //middle, but not the left and right edges
+                if (i>ss && i<s-ss && arr[i] == 0)
+                {
+                    //left
+                    if(i % ss == 0)
+                    {
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                    }
+                    //right
+                    if(i % ss != ss - 1)
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                        zerosNeighbors.Add(arr[i + ss]);
+                    }
+                    zerosNeighbors.Add(arr[i - 1]);
+                    zerosNeighbors.Add(arr[i + 1]);
+                    zerosNeighbors.Add(arr[i - ss]);
+                    zerosNeighbors.Add(arr[i + ss]);
+                }
+                //last row that isn't the edges
+                if (i>(s - ss))
+                {
+                    if (arr[i] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                    }
+                    //left corner
+                    if (arr[s-ss] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i + 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
+                    }
+                    //right corner
+                    if (arr[s - 1] == 0)
+                    {
+                        zerosNeighbors.Add(arr[i - 1]);
+                        zerosNeighbors.Add(arr[i - ss]);
                     }
                 }
             }
-            Console.WriteLine(matrix[xCoordinat + 1, yCoordinat] + " " +
-                matrix[xCoordinat - 1, yCoordinat] + " " +
-                matrix[xCoordinat, yCoordinat + 1] + " " +
-                matrix[xCoordinat, yCoordinat - 1]);
 
-            List<int> isBoardEdge = new List<int>();
-            //finding board edge
-            for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
-            {
-                for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
-                {
-                    if((y == 0 || 
-                        x == (n - 1) || 
-                        (x == 0 && y != 3) || 
-                        y == (n - 1)))
-                        isBoardEdge.Add(matrix[x,y]);
-                }
-            }
-
-            //if(matrix.Length - 1)
-            //{
-
-            //}
-
-
-            //wrong 
-            if (n == matrix[xCoordinat + 1, yCoordinat] ||
-                n == matrix[xCoordinat - 1, yCoordinat] ||
-                n == matrix[xCoordinat, yCoordinat + 1] ||
-                n == matrix[xCoordinat, yCoordinat - 1])
-            {
-                
+            if(zerosNeighbors.Contains(n))
                 return true;
-            }
             else
                 return false;
+
         }
         public void swap(int n)
         {
             getAmountOfMoves();
             //swapping n with 0
-            for (int x = 0; x < Math.Sqrt(arr.Length); ++x)
+            int temp;
+            int zero = 0;
+            for(int i = 0; i < n; i++)
             {
-                for (int y = 0; y < Math.Sqrt(arr.Length); ++y)
+                if (arr[i] == 0)
                 {
-                    if (matrix[x, y] == 0)
-                    {
-                        xCoordinat = x;
-                        yCoordinat = y;
-                    }
-                    if (matrix[x, y] == n)
-                    {
-                        xCoordinatTemp = x;
-                        yCoordinatTemp = y;
-                    }
+                    zero = i;
+                    break;
                 }
             }
-            matrix[xCoordinat,yCoordinat] = matrix[xCoordinatTemp,yCoordinatTemp];
-            matrix[xCoordinatTemp, yCoordinatTemp] = 0;
+            temp = zero;
+            arr[zero] = n;
+            arr[n] = temp;
+
+            display();
         }
         public int getAmountOfMoves()
         {
@@ -191,47 +209,32 @@ namespace Slide_Puzzle
         public void solution()
         {
             Console.WriteLine("solution");
-            /*matrixSolution = new int[n, n];
-            int counter = 0;
+            int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
+            sol = new int[n];
 
-            for (int i = 0; i < Math.Sqrt(n); i++)
-            {
-                for (int j = 0; j < Math.Sqrt(n); j++)
-                {
-                    matrixSolution[i, j] = counter;
-                    //printing the solution
-                    Console.Write(matrixSolution[i, j] + " ");
-                    counter++;
-                }
-                Console.WriteLine(" ");
-            }*/
-
-            //creating every tile
-            arrSolution = new int[n];
             for (int i = 0; i < n; i++)
             {
-                arrSolution[i] = i + 1;
-                if (arrSolution[i] == n)
-                    arrSolution[i] = 0;
+                if(i == n-1)
+                    sol[i] = 0;
+                else
+                    sol[i] = i+1;
             }
 
-            matrixSolution = new int[n, n];
-            int counter = 0;
-            for (int i = 0; i < Math.Sqrt(n); i++)
+            //printing the solution
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < Math.Sqrt(n); j++)
+                if (i % ss == 0 && i != 0)
                 {
-                    matrixSolution[i, j] = arrSolution[counter];
-                    //printing the solution
-                    Console.Write(matrixSolution[i, j] + " ");
-                    counter++;
+                    Console.WriteLine(" ");
                 }
-                Console.WriteLine(" ");
+                Console.Write(sol[i] + " ");
             }
+            Console.WriteLine(" ");
         }
         public bool isComplited()
         {
-            if (matrix.Equals(matrixSolution)){ 
+            if (arr.Equals(sol))
+            {
                 Console.WriteLine("what a big boi, you solved the slide puzzle!");
                 return false;
             }
