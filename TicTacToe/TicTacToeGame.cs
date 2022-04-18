@@ -18,15 +18,23 @@ namespace TicTacToe
             {" ", "|", " ", "|", " "}
             };
 
-            for(int i = 0; i < 5; i++){
-                for (int j = 0; j < 5; j++){
+            printBoard(board);
 
-                    Console.Write(board[i,j]);
+        }
+
+        public void printBoard(string[,] board)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+
+                    Console.Write(board[i, j]);
                 }
                 Console.WriteLine();
             }
-
         }
+
               
     }
 }
