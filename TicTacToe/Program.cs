@@ -9,7 +9,7 @@ namespace TicTacToe
         {
             // test commit
             Game game = new Game();
-            game.createBoard();
+            game.play();
         }
     }
 }
