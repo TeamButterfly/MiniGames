@@ -62,30 +62,75 @@ namespace TicTacToe
             switch (pos)
             {
                 case 1:
-                    board[0, 0] = "X";
+                    if (board[0, 0] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
+                        board[0, 0] = "X";
                     break;
                 case 2:
+                    if (board[0, 2] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[0, 2] = "X";
                     break;
                 case 3:
+                    if (board[0, 4] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[0, 4] = "X";
                     break;
                 case 4:
+                    if (board[2, 0] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[2, 0] = "X";
                     break;
                 case 5:
+                    if (board[2, 2] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[2, 2] = "X";
                     break;
                 case 6:
+                    if (board[2, 4] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[2, 4] = "X";
                     break;
                 case 7:
+                    if (board[4, 0] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[4, 0] = "X";
                     break;
                 case 8:
+                    if (board[4, 2] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[4, 2] = "X";
                     break;
                 case 9:
+                    if (board[4, 4] == "X" || board[0, 0] == "O")
+                    {
+                        Console.WriteLine("This space is already taken");
+                        break;
+                    }
                     board[4, 4] = "X";
                     break;
                 
