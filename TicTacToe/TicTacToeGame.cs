@@ -6,7 +6,7 @@ namespace TicTacToe
 {
     public class Game
     {
-
+        bool isRunning = false;
         public void createBoard()
         {
 
@@ -19,7 +19,6 @@ namespace TicTacToe
             };
 
             printBoard(board);
-
         }
 
         public void printBoard(string[,] board)
@@ -35,6 +34,15 @@ namespace TicTacToe
             }
         }
 
+        public void play()
+        {
+            isRunning = true;
+
+            while (isRunning)
+            {
+                //method
+            }
+        }
               
     }
 }
