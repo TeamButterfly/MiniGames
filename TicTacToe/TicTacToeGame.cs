@@ -44,23 +44,33 @@ namespace TicTacToe
             {
                 //method
                 
-                int pos = move();
+                int pos = move(board);
                 insertMove(pos,board);
                 printBoard(board);
             }
         }
 
-        public int move()
+        public int move(string[,] board)
         {
             Console.WriteLine("Please enter your placement (1-9):");
+            // TODO : should add exception handling if the user inserts non-ints
             int x = Convert.ToInt32(Console.ReadLine());
+            bool correctInput = true;
 
-            if (x < 0 || x > 9)
+            while (correctInput)
             {
-                Console.WriteLine("Invalid move please try again.");
-                Console.WriteLine("Please enter your placement (1-9):");
-                x = Convert.ToInt32(Console.ReadLine());
+                if (x <= 0 || x > 9)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid move please try again.");
+                    printBoard(board);
+                    Console.WriteLine("Please enter your placement (1-9):");
+                    x = Convert.ToInt32(Console.ReadLine());
+                }
+                else { correctInput = false; }
+              
             }
+            Console.Clear();
             return x;
         }
 
