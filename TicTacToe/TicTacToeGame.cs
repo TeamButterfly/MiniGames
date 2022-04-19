@@ -8,6 +8,45 @@ namespace TicTacToe
     {
         bool isRunning = false;
         string currentUser = "player";
+        List<int> playerMoves = new List<int>();
+        List<int> computerMoves = new List<int>();
+        int computerPos;
+        int playerPos;
+
+        public void play()
+        {
+            isRunning = true;
+            string[,] board = createBoard();
+
+            while (isRunning)
+            {
+                //player's move and make it's move
+                int playerPos = move(board, currentUser); 
+                while (playerMoves.Contains(playerPos) || computerMoves.Contains(playerPos)) { 
+                    Console.WriteLine("That position is already taken. Try again!");
+                    printBoard(board);
+                    playerPos = move(board, currentUser);
+                }
+
+                insertMove(playerPos, board, currentUser);
+                printBoard(board);
+                playerMoves.Add(playerPos);
+
+                //switch to computer and make it's move
+                currentUser = switchUser(currentUser);
+                Random rand = new Random();
+                computerPos = rand.Next(1, 10);
+                while (playerMoves.Contains(computerPos) || computerMoves.Contains(computerPos))
+                {
+                    computerPos = rand.Next(1, 10);
+                }
+                insertMove(computerPos, board, currentUser);
+                computerMoves.Add(computerPos);
+                printBoard(board);
+                currentUser = switchUser(currentUser);
+            }
+        }
+
         public string[,] createBoard()
         {
 
@@ -29,29 +68,9 @@ namespace TicTacToe
             {
                 for (int j = 0; j < 5; j++)
                 {
-
                     Console.Write(board[i, j]);
                 }
                 Console.WriteLine();
-            }
-        }
-
-        public void play()
-        {
-            isRunning = true;
-            string[,] board = createBoard();
-
-            while (isRunning)
-            {
-                //method
-                
-                int pos = move(board, currentUser);
-                insertMove(pos,board, currentUser);
-                printBoard(board);
-                currentUser = switchUser(currentUser);
-                computerMove(board, currentUser);
-                printBoard(board);
-                currentUser = switchUser(currentUser);
             }
         }
 
@@ -73,212 +92,76 @@ namespace TicTacToe
                     Console.WriteLine("Please enter your placement (1-9):");
                     x = Convert.ToInt32(Console.ReadLine());
                 }
-                else { correctInput = false; }
+                else {
+                    correctInput = false; }
               
             }
             Console.Clear();
             return x;
         }
 
-        public void insertMove(int pos, string[,] board, string currentUser)
-        {
+        public void insertMove(int pos, string[,] board, string currentUser) {
             string symbol = " ";
-            if (currentUser.Equals("player"))
-            {
-                symbol = "X";
+
+            if (currentUser.Equals("player")) 
+            { 
+                symbol = "X"; 
+            }
+
+            else if (currentUser.Equals("computer")) 
+            { 
+                symbol = "O"; 
+            }
+
+            else 
+            {   
+                Console.WriteLine("Error");
+                return;
             }
 
             switch (pos)
             {
                 case 1:
-                    if (board[0, 0] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                        board[0, 0] = symbol;
-                    break;
-                case 2:
-                    if (board[0, 2] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[0, 2] = symbol;
-                    break;
-                case 3:
-                    if (board[0, 4] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[0, 4] = symbol;
-                    break;
-                case 4:
-                    if (board[2, 0] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[2, 0] = symbol;
-                    break;
-                case 5:
-                    if (board[2, 2] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[2, 2] = symbol;
-                    break;
-                case 6:
-                    if (board[2, 4] == "X" || board[0, 0] == "O")
-                    {
-
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[2, 4] = symbol;
-                    break;
-                case 7:
-                    if (board[4, 0] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[4, 0] = symbol;
-                    break;
-                case 8:
-                    if (board[4, 2] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[4, 2] = symbol;
-                    break;
-                case 9:
-                    if (board[4, 4] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
-                    board[4, 4] = symbol;
-                    break;
-                
-                default:
-                    break;
-            }
-            Console.Clear();
-        }
-
-        public void computerMove(string[,] board, string currentUser) {
-            string symbol = " ";
-            if (currentUser.Equals("computer"))
-            {
-                symbol = "O";
-            }
-
-            Random rand = new Random();
-            int pos = rand.Next(1, 10);
-
-            switch (pos)
-            {
-                case 1:
-                    if (board[0, 0] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[0, 0] = symbol;
                     break;
+
                 case 2:
-                    if (board[0, 2] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[0, 2] = symbol;
                     break;
+
                 case 3:
-                    if (board[0, 4] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[0, 4] = symbol;
                     break;
+
                 case 4:
-                    if (board[2, 0] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[2, 0] = symbol;
                     break;
+
                 case 5:
-                    if (board[2, 2] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[2, 2] = symbol;
                     break;
-                case 6:
-                    if (board[2, 4] == "X" || board[0, 0] == "O")
-                    {
 
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
+                case 6:
                     board[2, 4] = symbol;
                     break;
+
                 case 7:
-                    if (board[4, 0] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[4, 0] = symbol;
                     break;
+
                 case 8:
-                    if (board[4, 2] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[4, 2] = symbol;
                     break;
+
                 case 9:
-                    if (board[4, 4] == "X" || board[0, 0] == "O")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This space is already taken. Try again");
-                        return;
-                    }
                     board[4, 4] = symbol;
                     break;
 
                 default:
                     break;
-            }
-            Console.Clear();
         }
+        Console.Clear();
+    }
 
         public string switchUser(string currentUser) {
             if (currentUser.Equals("player")){
@@ -291,6 +174,11 @@ namespace TicTacToe
 
             return currentUser;
         }
-              
+        public bool isGameWon(){ 
+        List<int> top = new List<int>();
+
+
+            return false;
+        }
     }
 }
