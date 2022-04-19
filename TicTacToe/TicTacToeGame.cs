@@ -12,47 +12,50 @@ namespace TicTacToe
         static List<int> computerMoves = new List<int>();
         int computerPos;
         int playerPos;
+        bool quitGame = false;
 
         public void play()
         {
-            string[,] board = createBoard();
-
-            while (isRunning.Equals(""))
-            {
-                //player's move and make it's move
-                int playerPos = move(board, currentUser);
-                while (playerMoves.Contains(playerPos) || computerMoves.Contains(playerPos))
+            while (quitGame == false) {
+                string[,] board = createBoard();
+                while (isRunning.Equals(""))
                 {
-                    Console.WriteLine("That position is already taken. Try again!");
+                    //player's move and make it's move
+                    playerPos = move(board);
+                    while (playerMoves.Contains(playerPos) || computerMoves.Contains(playerPos))
+                    {
+                        Console.WriteLine("That position is already taken. Try again!");
+                        printBoard(board);
+                        playerPos = move(board);
+                    }
+
+                    insertMove(playerPos, board, currentUser);
                     printBoard(board);
-                    playerPos = move(board, currentUser);
-                }
+                    playerMoves.Add(playerPos);
+                    isRunning = isGameWon(board);
+                    if (isRunning.Length > 0) {
+                        break;
+                    }
+                    currentUser = switchUser(currentUser);
 
-                insertMove(playerPos, board, currentUser);
-                printBoard(board);
-                playerMoves.Add(playerPos);
-                isRunning = isGameWon(board);
-                if (isRunning.Length > 0) {
-                    break;
-                }
-                currentUser = switchUser(currentUser);
-
-                //computer's turn and make it's move
-                Random rand = new Random();
-                computerPos = rand.Next(1, 10);
-                while (playerMoves.Contains(computerPos) || computerMoves.Contains(computerPos))
-                {
+                    //computer's turn and make it's move
+                    Random rand = new Random();
                     computerPos = rand.Next(1, 10);
+                    while (playerMoves.Contains(computerPos) || computerMoves.Contains(computerPos))
+                    {
+                        computerPos = rand.Next(1, 10);
+                    }
+                    insertMove(computerPos, board, currentUser);
+                    computerMoves.Add(computerPos);
+                    printBoard(board);
+                    isRunning = isGameWon(board);
+                    if (isRunning.Length > 0)
+                    {
+                        break;
+                    }
+                    currentUser = switchUser(currentUser);
                 }
-                insertMove(computerPos, board, currentUser);
-                computerMoves.Add(computerPos);
-                printBoard(board);
-                currentUser = switchUser(currentUser);
-                isRunning = isGameWon(board);
-                if (isRunning.Length > 0)
-                {
-                    break;
-                }
+                restartGame();
             }
         }
 
@@ -83,7 +86,7 @@ namespace TicTacToe
             }
         }
 
-        private int move(string[,] board, int currentUser)
+        private int move(string[,] board)
         {
             Console.WriteLine("It is the player's turn." +
                 "Please enter your placement (1-9):");
@@ -268,6 +271,36 @@ namespace TicTacToe
             }
 
             Console.WriteLine("Contragulations to {0} for winning the game", win);
+        }
+        private bool restartGame()
+        {
+            Console.WriteLine("Wanna play again?" + "\n" + "press y for trying again or n quitting the game");
+            string result = Console.ReadLine();
+            if (result == "y")
+            {
+                Console.Clear();
+                isRunning = "";
+                currentUser = 0;
+                playerMoves.Clear();
+                computerMoves.Clear();
+                quitGame = false;
+                return true;
+            }
+            else if (result == "n")
+            {
+                Console.Clear();
+                Console.WriteLine("Thank you for playing :)");
+                quitGame = true;
+                return false;
+            }
+            else 
+            {
+                Console.Clear();
+                Console.WriteLine("Something went wrong. Ending game");
+                quitGame = true;
+                return false;
+            }
+
         }
     }
 }
