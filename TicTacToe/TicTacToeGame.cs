@@ -93,7 +93,7 @@ namespace TicTacToe
 
             while (correctInput == false)
             {
-                Console.WriteLine("It is the player's turn." +
+                Console.WriteLine("It is the player's turn. " +
                 "Please enter your placement (1-9):");
                 try
                 {
@@ -284,7 +284,7 @@ namespace TicTacToe
         }
         private bool restartGame()
         {
-            Console.WriteLine("Wanna play again?" + "\n" + "press y for trying again or n quitting the game");
+            Console.WriteLine("Wanna play again?" + "\n" + "Press y for trying again or n quitting the game");
             string result = "";
             try
             {
