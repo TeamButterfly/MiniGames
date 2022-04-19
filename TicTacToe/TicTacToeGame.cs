@@ -87,25 +87,32 @@ namespace TicTacToe
         }
 
         private int move(string[,] board)
-        {
-            Console.WriteLine("It is the player's turn." +
-                "Please enter your placement (1-9):");
-            // TODO : should add exception handling if the user inserts non-ints
-            int x = Convert.ToInt32(Console.ReadLine());
-            bool correctInput = true;
+        { 
+            int x = 0;
+            bool correctInput = false;
 
-            while (correctInput)
+            while (correctInput == false)
             {
-                if (x <= 0 || x > 9)
+                Console.WriteLine("It is the player's turn." +
+                "Please enter your placement (1-9):");
+                try
+                {
+                    x = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            
+                if (x >= 1 && x <= 9)
+                {
+                    correctInput = true;
+                }
+                else
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid move please try again.");
                     printBoard(board);
-                    Console.WriteLine("Please enter your placement (1-9):");
-                    x = Convert.ToInt32(Console.ReadLine());
-                }
-                else
-                {
                     correctInput = false;
                 }
 
@@ -197,64 +204,66 @@ namespace TicTacToe
             // check the rows :
             if ((board[0, 0] == "X" && board[0, 2] ==  "X" && board[0, 4] == "X") || (board[0, 0] == "O" && board[0, 2] == "O" && board[0, 4] == "O"))
             {
-                displayWinner(board[0, 0]);
+                displayWinner(board[0, 0], board);
                 return board[0, 0];
             }
 
             else if ((board[2, 0] == "X" && board[2, 2] == "X" && board[2, 4] == "X") || (board[2, 0] == "O" && board[2, 2] == "O" && board[2, 4] == "O"))
             {
-                displayWinner(board[2, 0]);
+                displayWinner(board[2, 0], board);
                 return board[2, 0];
             }
 
             else if ((board[4, 0] == "X" && board[4, 2] == "X" && board[4, 4] == "X") || (board[4, 0] == "O" && board[4, 2] == "O" && board[4, 4] == "O"))
             {
-                displayWinner(board[4, 0]);
+                displayWinner(board[4, 0], board);
                 return board[4, 0];
             }
 
             // check the columns :
             else if ((board[0, 0] == "X" && board[2, 0] == "X" && board[4, 0] == "X") || (board[0, 0] == "O" && board[2, 0] == "O" && board[4, 0] == "O"))
             {
-                displayWinner(board[0, 0]);
+                displayWinner(board[0, 0], board);
                 return board[0, 0];
             }
 
             else if ((board[0, 2] == "X" && board[2, 2] == "X" && board[4, 2] == "X") || (board[0, 2] == "O" && board[2, 2] == "O" && board[4, 2] == "O"))
             {
-                displayWinner(board[2, 0]);
+                displayWinner(board[2, 0], board);
                 return board[2, 0];
             }
 
             else if ((board[0, 4] == "X" && board[2, 4] == "X" && board[4, 4] == "X") || (board[0, 4] == "O" && board[2, 4] == "O" && board[4, 4] == "O"))
             {
-                displayWinner(board[4, 0]);
+                displayWinner(board[4, 0], board);
                 return board[4, 0];
             }
 
             // check the diagonal :
             else if ((board[0, 0] == "X" && board[2, 2] == "X" && board[4, 4] == "X") || (board[0, 0] == "O" && board[2, 2] == "O" && board[4, 4] == "O"))
             {
-                displayWinner(board[0, 0]);
+                displayWinner(board[0, 0], board);
                 return board[0, 0];
             }
 
             else if ((board[0, 4] == "X" && board[2, 2] == "X" && board[4, 0] == "X") || (board[0, 4] == "O" && board[2, 2] == "O" && board[4, 0] == "O"))
             {
-                displayWinner(board[4, 0]);
+                displayWinner(board[4, 0], board);
                 return board[4, 0];
 
             }
             else if (playerMoves.Count + computerMoves.Count == 9)
             {
+                Console.Clear();
                 Console.WriteLine("The game was a tie.");
-                    return "tie";
+                printBoard(board);
+                return "tie";
             }
             
             else { return ""; }
         }
 
-        private void displayWinner(string winner)
+        private void displayWinner(string winner, string [,] board)
         {
             string win = "";
             if (winner == "X")
@@ -269,13 +278,23 @@ namespace TicTacToe
             {
                 win = "Error";
             }
-
+            Console.Clear();
             Console.WriteLine("Contragulations to {0} for winning the game", win);
+            printBoard(board);
         }
         private bool restartGame()
         {
             Console.WriteLine("Wanna play again?" + "\n" + "press y for trying again or n quitting the game");
-            string result = Console.ReadLine();
+            string result = "";
+            try
+            {
+                result = Console.ReadLine();
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
             if (result == "y")
             {
                 Console.Clear();
@@ -296,8 +315,8 @@ namespace TicTacToe
             else 
             {
                 Console.Clear();
-                Console.WriteLine("Something went wrong. Ending game");
-                quitGame = true;
+                Console.WriteLine("Something went wrong.");
+                restartGame();
                 return false;
             }
 
