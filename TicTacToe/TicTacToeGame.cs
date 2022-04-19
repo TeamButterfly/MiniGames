@@ -247,7 +247,7 @@ namespace TicTacToe
             }
             else if (playerMoves.Count + computerMoves.Count == 9)
             {
-                Console.WriteLine("It is a tie.");
+                Console.WriteLine("The game was a tie.");
                     return "tie";
             }
             
