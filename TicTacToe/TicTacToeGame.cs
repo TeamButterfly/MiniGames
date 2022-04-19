@@ -31,9 +31,9 @@ namespace TicTacToe
                 insertMove(playerPos, board, currentUser);
                 printBoard(board);
                 playerMoves.Add(playerPos);
-
-                //switch to computer and make it's move
                 currentUser = switchUser(currentUser);
+
+                //computer's turn and make it's move
                 Random rand = new Random();
                 computerPos = rand.Next(1, 10);
                 while (playerMoves.Contains(computerPos) || computerMoves.Contains(computerPos))
