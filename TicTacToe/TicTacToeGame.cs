@@ -6,23 +6,23 @@ namespace TicTacToe
 {
     public class Game
     {
-        bool isRunning = false;
-        string currentUser = "player";
-        List<int> playerMoves = new List<int>();
-        List<int> computerMoves = new List<int>();
+        string isRunning = "";
+        int currentUser = 0;
+        static List<int> playerMoves = new List<int>();
+        static List<int> computerMoves = new List<int>();
         int computerPos;
         int playerPos;
 
         public void play()
         {
-            isRunning = true;
             string[,] board = createBoard();
 
-            while (isRunning)
+            while (isRunning.Equals(""))
             {
                 //player's move and make it's move
-                int playerPos = move(board, currentUser); 
-                while (playerMoves.Contains(playerPos) || computerMoves.Contains(playerPos)) { 
+                int playerPos = move(board, currentUser);
+                while (playerMoves.Contains(playerPos) || computerMoves.Contains(playerPos))
+                {
                     Console.WriteLine("That position is already taken. Try again!");
                     printBoard(board);
                     playerPos = move(board, currentUser);
@@ -31,6 +31,10 @@ namespace TicTacToe
                 insertMove(playerPos, board, currentUser);
                 printBoard(board);
                 playerMoves.Add(playerPos);
+                isRunning = isGameWon(board);
+                if (isRunning.Length > 0) {
+                    break;
+                }
                 currentUser = switchUser(currentUser);
 
                 //computer's turn and make it's move
@@ -44,10 +48,15 @@ namespace TicTacToe
                 computerMoves.Add(computerPos);
                 printBoard(board);
                 currentUser = switchUser(currentUser);
+                isRunning = isGameWon(board);
+                if (isRunning.Length > 0)
+                {
+                    break;
+                }
             }
         }
 
-        public string[,] createBoard()
+        private string[,] createBoard()
         {
 
             string[,] board = {
@@ -62,7 +71,7 @@ namespace TicTacToe
             return board;
         }
 
-        public void printBoard(string[,] board)
+        private void printBoard(string[,] board)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -74,10 +83,10 @@ namespace TicTacToe
             }
         }
 
-        public int move(string[,] board, string currentUser)
+        private int move(string[,] board, int currentUser)
         {
-            Console.WriteLine("It is the {0}'s turn." +
-                "Please enter your placement (1-9):", currentUser);
+            Console.WriteLine("It is the player's turn." +
+                "Please enter your placement (1-9):");
             // TODO : should add exception handling if the user inserts non-ints
             int x = Convert.ToInt32(Console.ReadLine());
             bool correctInput = true;
@@ -92,29 +101,32 @@ namespace TicTacToe
                     Console.WriteLine("Please enter your placement (1-9):");
                     x = Convert.ToInt32(Console.ReadLine());
                 }
-                else {
-                    correctInput = false; }
-              
+                else
+                {
+                    correctInput = false;
+                }
+
             }
             Console.Clear();
             return x;
         }
 
-        public void insertMove(int pos, string[,] board, string currentUser) {
+        private void insertMove(int pos, string[,] board, int currentUser)
+        {
             string symbol = " ";
 
-            if (currentUser.Equals("player")) 
-            { 
-                symbol = "X"; 
+            if (currentUser.Equals(0))
+            {
+                symbol = "X";
             }
 
-            else if (currentUser.Equals("computer")) 
-            { 
-                symbol = "O"; 
+            else if (currentUser.Equals(1))
+            {
+                symbol = "O";
             }
 
-            else 
-            {   
+            else
+            {
                 Console.WriteLine("Error");
                 return;
             }
@@ -159,26 +171,103 @@ namespace TicTacToe
 
                 default:
                     break;
+            }
+            Console.Clear();
         }
-        Console.Clear();
-    }
 
-        public string switchUser(string currentUser) {
-            if (currentUser.Equals("player")){
-                currentUser = "computer";
+        private int switchUser(int currentUser)
+        {
+            if (currentUser.Equals(0))
+            {
+                currentUser = 1;
             }
 
-            else {
-                currentUser = "player";
+            else
+            {
+                currentUser = 0;
             }
 
             return currentUser;
         }
-        public bool isGameWon(){ 
-        List<int> top = new List<int>();
+        private string isGameWon(string[,] board)
+        {
+            // check the rows :
+            if ((board[0, 0] == "X" && board[0, 2] ==  "X" && board[0, 4] == "X") || (board[0, 0] == "O" && board[0, 2] == "O" && board[0, 4] == "O"))
+            {
+                displayWinner(board[0, 0]);
+                return board[0, 0];
+            }
 
+            else if ((board[2, 0] == "X" && board[2, 2] == "X" && board[2, 4] == "X") || (board[2, 0] == "O" && board[2, 2] == "O" && board[2, 4] == "O"))
+            {
+                displayWinner(board[2, 0]);
+                return board[2, 0];
+            }
 
-            return false;
+            else if ((board[4, 0] == "X" && board[4, 2] == "X" && board[4, 4] == "X") || (board[4, 0] == "O" && board[4, 2] == "O" && board[4, 4] == "O"))
+            {
+                displayWinner(board[4, 0]);
+                return board[4, 0];
+            }
+
+            // check the columns :
+            else if ((board[0, 0] == "X" && board[2, 0] == "X" && board[4, 0] == "X") || (board[0, 0] == "O" && board[2, 0] == "O" && board[4, 0] == "O"))
+            {
+                displayWinner(board[0, 0]);
+                return board[0, 0];
+            }
+
+            else if ((board[0, 2] == "X" && board[2, 2] == "X" && board[4, 2] == "X") || (board[0, 2] == "O" && board[2, 2] == "O" && board[4, 2] == "O"))
+            {
+                displayWinner(board[2, 0]);
+                return board[2, 0];
+            }
+
+            else if ((board[0, 4] == "X" && board[2, 4] == "X" && board[4, 4] == "X") || (board[0, 4] == "O" && board[2, 4] == "O" && board[4, 4] == "O"))
+            {
+                displayWinner(board[4, 0]);
+                return board[4, 0];
+            }
+
+            // check the diagonal :
+            else if ((board[0, 0] == "X" && board[2, 2] == "X" && board[4, 4] == "X") || (board[0, 0] == "O" && board[2, 2] == "O" && board[4, 4] == "O"))
+            {
+                displayWinner(board[0, 0]);
+                return board[0, 0];
+            }
+
+            else if ((board[0, 4] == "X" && board[2, 2] == "X" && board[4, 0] == "X") || (board[0, 4] == "O" && board[2, 2] == "O" && board[4, 0] == "O"))
+            {
+                displayWinner(board[4, 0]);
+                return board[4, 0];
+
+            }
+            else if (playerMoves.Count + computerMoves.Count == 9)
+            {
+                Console.WriteLine("It is a tie.");
+                    return "tie";
+            }
+            
+            else { return ""; }
+        }
+
+        private void displayWinner(string winner)
+        {
+            string win = "";
+            if (winner == "X")
+            {
+                win = "player";
+            }
+            else if (winner == "O")
+            {
+                win = "computer";
+            }
+            else 
+            {
+                win = "Error";
+            }
+
+            Console.WriteLine("Contragulations to {0} for winning the game", win);
         }
     }
 }
