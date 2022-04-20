@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 
+// TODOs : insert comments and descriptions to the methods/class 
+//         Optimer koden 
+
 namespace TicTacToe
 {
     public class TicTacToeGame

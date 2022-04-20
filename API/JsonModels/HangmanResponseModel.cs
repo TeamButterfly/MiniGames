@@ -8,6 +8,8 @@
 
         public string word { get; set; }
 
+        public int wordlength { get; set; }
+
         public string guessletter { get; set; }
 
         public string wrongguesses { get; set; }

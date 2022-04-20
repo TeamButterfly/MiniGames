@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 
+//TODO: Skal ikke sende ordet med retur
+//TODO: Skal sende ordlængden
+//TODO: Skal sende respons hvis bogstavet er rigtigt med hvor i ordet bogstavet er gættet
+//TODO: Skal give point ved vundet spil
+
 namespace API.Controllers
 {
     [ApiController]
@@ -39,7 +44,7 @@ namespace API.Controllers
         [Route("Stop")]
         public ActionResult<bool> StopGame()
         {
-            //_hangmanGame.stop();
+            _hangmanGame.Stop();
             return true;
         }
 
@@ -53,9 +58,11 @@ namespace API.Controllers
             model.word = _hangmanGame.getword();
             model.Life = _hangmanGame.getlives();
             model.IsGameRunning = _hangmanGame.getIsGameRunning();
+            model.IsLetterGuessed = _hangmanGame.getisGameWon();
             model.guessletter = letter;
             model.wrongguesses = _hangmanGame.getwrongguesses();
             model.playerguesses = _hangmanGame.getplayerguesses();
+            model.wordlength = _hangmanGame.getword().Length;
            
 
             

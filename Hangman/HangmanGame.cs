@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
 //TODO: Skal kunne gætte på et helt ord
-//TODO: Skal der være en initiel instruktionsbesked?
 //TODO: Skal man kunne spille multiplayer?
 
 namespace Hangman
@@ -19,7 +18,8 @@ namespace Hangman
         string playerGuesses;
         bool[] guessword;
         bool isRunning = false;
-        int lives = 7;
+        int lives = 8; 
+        bool isGameWon = false;
 
 
         List<String> words = new List<string> {
@@ -115,9 +115,10 @@ namespace Hangman
         {
 
             //Converts players guess and word to guess to uppercase
-            
 
-            if (!string.IsNullOrEmpty(letter))
+            isGameOver();
+
+            if (!string.IsNullOrEmpty(letter) && isRunning)
             {
                 string upperletter = letter.ToUpper();
 
@@ -166,7 +167,7 @@ namespace Hangman
             {
                 Console.WriteLine("U must enter a guess");
                 return false;
-            }
+            }            
         }
 
 
@@ -194,8 +195,11 @@ namespace Hangman
         {
             if (lives <= 0)
             {
+                /**
                 Console.Clear();
                 Console.WriteLine(gameLostMessage());
+                **/
+                Stop();
                 return;
             }
             for (int i = 0; i < guessword.Length; i++)
@@ -208,29 +212,14 @@ namespace Hangman
 
             //Only reaches here if game is won
 
+            
             Stop();
+            /**
             Console.Clear();
             Console.Write("Game is Won");
+            **/
+            isGameWon = true;
         }
-
-        /* Works
-        
-        public void isGameOver()
-        {
-            for (int i = 0; i < guessword.Length; i++)
-            {
-                if (guessword[i] == false)
-                {
-                    if (lives > 0)
-                    {
-                        return;
-                    }
-                }
-            }
-            isRunning = false;
-            Console.Write("Game is Won");
-        }
-        */
 
         private String gameLostMessage()
         {
@@ -245,7 +234,7 @@ namespace Hangman
             //TODO:Fix
         }
 
-        private void Stop()
+        public void Stop()
         {
             isRunning = false;
         }
@@ -273,6 +262,11 @@ namespace Hangman
         public bool getIsGameRunning()
         {
             return isRunning;
+        }
+
+        public bool getisGameWon()
+        {
+            return isGameWon;
         }
     }
 
