@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TicTacToe
 {
-    public class Game
+    public class TicTacToeGame
     {
         string isRunning = "";
         int currentUser = 0;
