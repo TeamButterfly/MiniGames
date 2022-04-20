@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 //TODO: Implementer en liste over forskellige ord (gerne i en fil)
 //TODO: Skal kunne gætte på et helt ord
-//TODO: Skal der være en initiel instruktionsbesked?
 //TODO: Skal man kunne spille multiplayer?
 
 namespace Hangman
@@ -19,7 +18,7 @@ namespace Hangman
         string playerGuesses;
         bool[] guessword;
         bool isRunning = false;
-        int lives = 1; // Bør være 7
+        int lives = 8; 
         bool isGameWon = false;
 
 

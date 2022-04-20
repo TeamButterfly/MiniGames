@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 
+//TODO: Skal ikke sende ordet med retur
+//TODO: Skal sende ordlængden
+//TODO: Skal sende respons hvis bogstavet er rigtigt med hvor i ordet bogstavet er gættet
+//TODO: Skal give point ved vundet spil
+
 namespace API.Controllers
 {
     [ApiController]
