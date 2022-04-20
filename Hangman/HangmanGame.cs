@@ -19,7 +19,8 @@ namespace Hangman
         string playerGuesses;
         bool[] guessword;
         bool isRunning = false;
-        int lives = 7;
+        int lives = 1; // Bør være 7
+        bool isGameWon = false;
 
 
         List<String> words = new List<string> {
@@ -115,9 +116,10 @@ namespace Hangman
         {
 
             //Converts players guess and word to guess to uppercase
-            
 
-            if (!string.IsNullOrEmpty(letter))
+            isGameOver();
+
+            if (!string.IsNullOrEmpty(letter) && isRunning)
             {
                 string upperletter = letter.ToUpper();
 
@@ -166,7 +168,7 @@ namespace Hangman
             {
                 Console.WriteLine("U must enter a guess");
                 return false;
-            }
+            }            
         }
 
 
@@ -194,8 +196,11 @@ namespace Hangman
         {
             if (lives <= 0)
             {
+                /**
                 Console.Clear();
                 Console.WriteLine(gameLostMessage());
+                **/
+                Stop();
                 return;
             }
             for (int i = 0; i < guessword.Length; i++)
@@ -208,9 +213,12 @@ namespace Hangman
 
             //Only reaches here if game is won
 
+            /**
             Stop();
             Console.Clear();
             Console.Write("Game is Won");
+            **/
+            isGameWon = true;
         }
 
         /* Works
@@ -273,6 +281,11 @@ namespace Hangman
         public bool getIsGameRunning()
         {
             return isRunning;
+        }
+
+        public bool getisGameWon()
+        {
+            return isGameWon;
         }
     }
 
