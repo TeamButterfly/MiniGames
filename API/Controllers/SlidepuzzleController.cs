@@ -61,12 +61,12 @@ namespace API.Controllers
 
         [Route("/points")]
         [HttpPost]
-        public ActionResult<SlidePuzzleModel> GivePoints()
+        public ActionResult<int> GivePoints()
         {
             var account = _accountRepository.GetAccountByUserId(Guid.Parse(_principal.Identity.Name));
             account.Points = 2/_slidePuzzle.getPoints();
             _accountRepository.UpdateAccount(account);
-            return Ok(new SlidePuzzleModel());
+            return Ok(account.Points);
         }
     }
 }

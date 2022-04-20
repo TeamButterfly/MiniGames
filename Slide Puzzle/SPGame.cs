@@ -21,33 +21,6 @@ namespace Slide_Puzzle
         int[] arr, sol;
         int amountOfMoves;
 
-        /*public bool play()
-        {
-            amountOfMoves = 0;
-            while (isComplited())
-            {
-                move();
-            }
-            return true;
-        }*/
-
-        /*public void setup()
-        {
-            Console.WriteLine("how big do you want it? >:) it has to be squared tho");
-            n = Convert.ToInt32(Console.ReadLine());
-
-            //checks if the input is squared
-            if (!((Math.Sqrt(n) % 1) == 0))
-            {
-                Console.WriteLine("The size isn't a squared size, try again");
-                setup();
-            }
-
-            createboard(n);
-            display();
-            solution();
-        }*/
-
         public int[] createboard(int n)
         {
             amountOfMoves = 0;
@@ -73,29 +46,8 @@ namespace Slide_Puzzle
             return arr;
         }
 
-
-        /*public void display()
-        {
-            int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
-
-            //printing the matrix board
-            Console.WriteLine("Board");
-            for(int i = 0; i < n; i++)
-            {
-                if (i % ss == 0 && i != 0)
-                {
-                    Console.WriteLine(" ");
-                }
-                Console.Write(arr[i] + " ");
-            }
-            Console.WriteLine(" ");
-        }*/
-
         public int[] move(int swapvalue)
         {
-            Console.WriteLine("Type the value of the tiles you want to move. It has to be neighbor with 0");
-            //swapvalue = Convert.ToInt32(Console.ReadLine());
-
             //checks if tile n is neighbor with 0, if not try again
             if (isNeighbor(swapvalue))
                 swap(swapvalue);
@@ -202,6 +154,7 @@ namespace Slide_Puzzle
         public void swap(int swapvalue)
         {
             countAmountOfMoves();
+
             //swapping n with 0
             int temp;
             int zero = 0;
@@ -220,8 +173,6 @@ namespace Slide_Puzzle
             }
             arr[zero] = swapvalue;
             arr[swapindex] = 0;
-
-            //display();
         }
         public void countAmountOfMoves()
         {
@@ -243,11 +194,7 @@ namespace Slide_Puzzle
         {
             solution();
             if (arr.SequenceEqual(sol))
-            {
-                //Console.WriteLine("what a big boi, you solved the slide puzzle!");
-                //Console.WriteLine("You used " + amountOfMoves + " moves, to solve the puzzle");
                 return true;
-            }
             return false;
         }
 
