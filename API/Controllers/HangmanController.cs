@@ -31,7 +31,7 @@ namespace API.Controllers
         [Route("Start")]
         public ActionResult<bool> StartGame()
         {
-            //_hangmanGame.start();
+            _hangmanGame.play();
             return true;
         }
 
@@ -48,7 +48,12 @@ namespace API.Controllers
         public ActionResult<HangmanResponseModel> GuessLetter(string letter)
         {
             //_hangmanGame.guessLetter(letter);
-            return Ok(new HangmanResponseModel());
+            HangmanResponseModel model = new HangmanResponseModel();
+            model.word = "Jantelov";
+            model.Life = 2;
+            model.IsGameLost = true;
+            model.guessletter = letter;
+            return Ok(model);
         }
 
         [HttpGet]
