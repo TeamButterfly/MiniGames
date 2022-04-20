@@ -213,32 +213,14 @@ namespace Hangman
 
             //Only reaches here if game is won
 
-            /**
+            
             Stop();
+            /**
             Console.Clear();
             Console.Write("Game is Won");
             **/
             isGameWon = true;
         }
-
-        /* Works
-        
-        public void isGameOver()
-        {
-            for (int i = 0; i < guessword.Length; i++)
-            {
-                if (guessword[i] == false)
-                {
-                    if (lives > 0)
-                    {
-                        return;
-                    }
-                }
-            }
-            isRunning = false;
-            Console.Write("Game is Won");
-        }
-        */
 
         private String gameLostMessage()
         {
@@ -253,7 +235,7 @@ namespace Hangman
             //TODO:Fix
         }
 
-        private void Stop()
+        public void Stop()
         {
             isRunning = false;
         }

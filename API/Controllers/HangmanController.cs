@@ -39,7 +39,7 @@ namespace API.Controllers
         [Route("Stop")]
         public ActionResult<bool> StopGame()
         {
-            //_hangmanGame.stop();
+            _hangmanGame.Stop();
             return true;
         }
 
