@@ -23,7 +23,7 @@ namespace API.Controllers
             _accountRepository = accountRepository;
             _mapper = mapper;
             _principal = principal;
-
+            _tictactoeGame = tictactoeGame;
         }
 
     }

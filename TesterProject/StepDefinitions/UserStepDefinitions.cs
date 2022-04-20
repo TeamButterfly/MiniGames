@@ -2,6 +2,7 @@ using API.JsonModels;
 using AutoMapper;
 using BuisnessLogic;
 using BuisnessLogic.Repository;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -15,9 +16,9 @@ namespace TesterProject.StepDefinitions
         private readonly IDatabaseConnection _databaseConnection;
         private readonly IUserRepository _userRepository;
 
-        public UserStepDefinitions()
+        public UserStepDefinitions(IConfiguration configuration)
         {
-            _databaseConnection = new DatabaseConnection();
+            _databaseConnection = new DatabaseConnection(configuration);
             _userRepository = new UserRepository(_databaseConnection, isTest: true);
 
             var users = _userRepository.GetUsers();
