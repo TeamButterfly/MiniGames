@@ -229,14 +229,14 @@ namespace TicTacToe
 
             else if ((board[0, 2] == "X" && board[2, 2] == "X" && board[4, 2] == "X") || (board[0, 2] == "O" && board[2, 2] == "O" && board[4, 2] == "O"))
             {
-                displayWinner(board[2, 0], board);
-                return board[2, 0];
+                displayWinner(board[0, 2], board);
+                return board[0, 2];
             }
 
             else if ((board[0, 4] == "X" && board[2, 4] == "X" && board[4, 4] == "X") || (board[0, 4] == "O" && board[2, 4] == "O" && board[4, 4] == "O"))
             {
-                displayWinner(board[4, 0], board);
-                return board[4, 0];
+                displayWinner(board[0, 4], board);
+                return board[0, 4];
             }
 
             // check the diagonal :
@@ -248,8 +248,8 @@ namespace TicTacToe
 
             else if ((board[0, 4] == "X" && board[2, 2] == "X" && board[4, 0] == "X") || (board[0, 4] == "O" && board[2, 2] == "O" && board[4, 0] == "O"))
             {
-                displayWinner(board[4, 0], board);
-                return board[4, 0];
+                displayWinner(board[0, 4], board);
+                return board[0, 4];
 
             }
             else if (playerMoves.Count + computerMoves.Count == 9)
