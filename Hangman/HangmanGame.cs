@@ -18,7 +18,7 @@ namespace Hangman
         string wrongLetters;
         string playerGuesses;
         bool[] guessword;
-        Boolean isRunning = false;
+        bool isRunning = false;
         int lives = 7;
 
 
@@ -38,18 +38,25 @@ namespace Hangman
         };
 
 
+        //For running in console
         public void play()
         {
             //Initializes the word to guess and sets the propper length of the guessing array
-            setGuesswordInitial();
-
-            isRunning = true;
+            start();
 
             //Runs game
             while (isRunning)
             {
                 playRound();
             }
+        }
+
+        //Starts a game
+
+        public void start()
+        {
+            setGuesswordInitial();
+            isRunning = true;
         }
 
         public void playRound()
@@ -108,11 +115,11 @@ namespace Hangman
         {
 
             //Converts players guess and word to guess to uppercase
-            string upperletter = letter.ToUpper();
+            
 
             if (!string.IsNullOrEmpty(letter))
             {
-
+                string upperletter = letter.ToUpper();
 
                 char guessletter = upperletter[0];
                 string upperword = word.ToUpper();
@@ -241,6 +248,31 @@ namespace Hangman
         private void Stop()
         {
             isRunning = false;
+        }
+
+        public int getlives()
+        {
+            return lives;
+        }
+
+        public string getword()
+        {
+            return word;
+        }
+
+        public string getwrongguesses()
+        {
+            return wrongLetters;
+        }
+
+        public string getplayerguesses()
+        {
+            return playerGuesses;
+        }
+
+        public bool getIsGameRunning()
+        {
+            return isRunning;
         }
     }
 

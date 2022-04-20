@@ -30,8 +30,8 @@ namespace API.Controllers
         [HttpGet]
         [Route("Start")]
         public ActionResult<bool> StartGame()
-        {
-            _hangmanGame.play();
+        {           
+            _hangmanGame.start();
             return true;
         }
 
@@ -49,10 +49,16 @@ namespace API.Controllers
         {
             //_hangmanGame.guessLetter(letter);
             HangmanResponseModel model = new HangmanResponseModel();
-            model.word = "Jantelov";
-            model.Life = 2;
-            model.IsGameLost = true;
+            _hangmanGame.PlayerGuess(letter);
+            model.word = _hangmanGame.getword();
+            model.Life = _hangmanGame.getlives();
+            model.IsGameRunning = _hangmanGame.getIsGameRunning();
             model.guessletter = letter;
+            model.wrongguesses = _hangmanGame.getwrongguesses();
+            model.playerguesses = _hangmanGame.getplayerguesses();
+           
+
+            
             return Ok(model);
         }
 
