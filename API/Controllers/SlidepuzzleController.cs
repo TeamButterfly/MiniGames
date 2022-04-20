@@ -21,11 +21,12 @@ namespace API.Controllers
         private readonly SPGame _slidePuzzle;
 
 
-        public SlidePuzzleController(IMapper mapper, IAccountRepository accountRepository, SPGame slide_Puzzle)
+        public SlidePuzzleController(IMapper mapper, IAccountRepository accountRepository, SPGame slide_Puzzle, IPrincipal principal)
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
             _slidePuzzle = slide_Puzzle;
+            _principal = principal;
         }
 
         [Route("Start")]
