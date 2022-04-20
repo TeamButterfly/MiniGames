@@ -10,7 +10,6 @@ using System.Security.Principal;
 namespace API.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     
     public class SlidePuzzleController : ControllerBase
@@ -30,77 +29,34 @@ namespace API.Controllers
         }
 
         [Route("Start")]
-        [HttpPost]
-        public ActionResult<SlidePuzzleModel> StartGame()
-        {
-            var game = new SPGame();
-            game.setup();
-            return Ok(new SlidePuzzleModel());
-        }
-        [Route("Start")]
         [HttpGet]
-        public ActionResult<SlidePuzzleModel> GetStartBoard()
+        public ActionResult<SlidePuzzleModel> CreateBoard(int gamesize)
         {
-            var game = new SPGame();
-            game.createboard();
-            return Ok(new SlidePuzzleModel());
+            var board = _slidePuzzle.createboard(gamesize);
+            var slidePuzzleModel = new SlidePuzzleModel
+            {
+                Board = board
+            };
+            return Ok(slidePuzzleModel);
         }
 
-        [Route("Play")]
-        [HttpPost]
-        public ActionResult<SlidePuzzleModel> PlaySPGame()
-        {
-            var game = new SPGame();
-            game.play();
-            return Ok(new SlidePuzzleModel());
-        }
-        [Route("Play")]
+        [Route("Move")]
         [HttpGet]
-        public ActionResult<SlidePuzzleModel> Move()
+        public ActionResult<SlidePuzzleModel> MoveTile(int swapvalue)
         {
-            var game = new SPGame();
-            game.move();
-            return Ok(new SlidePuzzleModel());
+            var boardUpdate = _slidePuzzle.move(swapvalue);
+            var slidePuzzleModel = new SlidePuzzleModel
+            {
+                Board = boardUpdate
+            };
+            return Ok(slidePuzzleModel);
         }
-        [Route("DisplayBoard")]
+       
+        [Route("isComplited")]
         [HttpGet]
-        public ActionResult<SlidePuzzleModel> GetBoard()
+        public ActionResult<bool> Solved()
         {
-            var game = new SPGame();
-            game.display();
-            return Ok(new SlidePuzzleModel());
-        }
-        [Route("Solution")]
-        [HttpPost]
-        public ActionResult<SlidePuzzleModel> Solved()
-        {
-            var game = new SPGame();
-            game.isComplited();
-            return Ok(new SlidePuzzleModel());
-        }
-        [Route("Solution")]
-        [HttpGet]
-        public ActionResult<SlidePuzzleModel> Solution()
-        {
-            var game = new SPGame();
-            game.solution();
-            return Ok(new SlidePuzzleModel());
-        }
-        [Route("Swap")]
-        [HttpGet]
-        public ActionResult<SlidePuzzleModel> Neigbors(int valueToSwap)
-        {
-            var game = new SPGame();
-            game.isNeighbor(valueToSwap);
-            return Ok(new SlidePuzzleModel());
-        }
-        [Route("Swap")]
-        [HttpPost]
-        public ActionResult<SlidePuzzleModel> Swapping(int valueToSwap)
-        {
-            var game = new SPGame();
-            game.swap(valueToSwap);
-            return Ok(new SlidePuzzleModel());
+            return Ok(_slidePuzzle.isComplited());
         }
 
         [Route("/points")]
@@ -108,8 +64,7 @@ namespace API.Controllers
         public ActionResult<SlidePuzzleModel> GivePoints()
         {
             var account = _accountRepository.GetAccountByUserId(Guid.Parse(_principal.Identity.Name));
-            var game = new SPGame();
-            account.Points = game.getPoints();
+            account.Points = 2/_slidePuzzle.getPoints();
             _accountRepository.UpdateAccount(account);
             return Ok(new SlidePuzzleModel());
         }

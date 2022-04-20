@@ -8,8 +8,8 @@ namespace Slide_Puzzle
         static void Main(string[] args)
         {
             SPGame game = new SPGame();
-            game.setup();
-            game.play();
+            //game.setup();
+            //game.play();
         }
     }
 }

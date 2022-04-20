@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Slide_Puzzle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace API
             services.AddSingleton<IAccountRepository, AccountRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<HangmanGame>();
+            services.AddSingleton<SPGame>();
             services.AddTransient<ITokenService, TokenService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

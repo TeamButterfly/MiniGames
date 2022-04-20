@@ -21,16 +21,17 @@ namespace Slide_Puzzle
         int[] arr, sol;
         int amountOfMoves;
 
-        public void play()
+        /*public bool play()
         {
             amountOfMoves = 0;
             while (isComplited())
             {
                 move();
             }
-        }
+            return true;
+        }*/
 
-        public void setup()
+        /*public void setup()
         {
             Console.WriteLine("how big do you want it? >:) it has to be squared tho");
             n = Convert.ToInt32(Console.ReadLine());
@@ -42,13 +43,15 @@ namespace Slide_Puzzle
                 setup();
             }
 
-            createboard();
+            createboard(n);
             display();
             solution();
-        }
+        }*/
 
-        public void createboard()
+        public int[] createboard(int n)
         {
+            amountOfMoves = 0;
+
             //creating every tile
             arr = new int[n];
             for (int i = 0; i < n; i++)
@@ -67,11 +70,11 @@ namespace Slide_Puzzle
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
-
+            return arr;
         }
 
 
-        public void display()
+        /*public void display()
         {
             int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
 
@@ -86,21 +89,19 @@ namespace Slide_Puzzle
                 Console.Write(arr[i] + " ");
             }
             Console.WriteLine(" ");
-        }
+        }*/
 
-        public void move()
+        public int[] move(int swapvalue)
         {
             Console.WriteLine("Type the value of the tiles you want to move. It has to be neighbor with 0");
-            int swapvalue = Convert.ToInt32(Console.ReadLine());
+            //swapvalue = Convert.ToInt32(Console.ReadLine());
 
             //checks if tile n is neighbor with 0, if not try again
             if (isNeighbor(swapvalue))
                 swap(swapvalue);
             else
-            {
                 Console.WriteLine("The tile you want to move isn't neighbor with 0, try again");
-                move();
-            }
+            return arr;
         }
 
         public bool isNeighbor(int swapvalue)
@@ -220,7 +221,7 @@ namespace Slide_Puzzle
             arr[zero] = swapvalue;
             arr[swapindex] = 0;
 
-            display();
+            //display();
         }
         public void countAmountOfMoves()
         {
@@ -228,7 +229,6 @@ namespace Slide_Puzzle
         }
         public void solution()
         {
-            int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
             sol = new int[n];
 
             for (int i = 0; i < n; i++)
@@ -241,18 +241,19 @@ namespace Slide_Puzzle
         }
         public bool isComplited()
         {
+            solution();
             if (arr.SequenceEqual(sol))
             {
-                Console.WriteLine("what a big boi, you solved the slide puzzle!");
-                Console.WriteLine("You used " + amountOfMoves + " moves, to solve the puzzle");
-                return false;
+                //Console.WriteLine("what a big boi, you solved the slide puzzle!");
+                //Console.WriteLine("You used " + amountOfMoves + " moves, to solve the puzzle");
+                return true;
             }
-            return true;
+            return false;
         }
 
         public int getPoints()
         {
-            return amountOfMoves/2;
+            return amountOfMoves;
         }
     }
 }
