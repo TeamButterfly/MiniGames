@@ -62,6 +62,7 @@ namespace API.Controllers
             model.guessletter = letter;
             model.wrongguesses = _hangmanGame.getwrongguesses();
             model.playerguesses = _hangmanGame.getplayerguesses();
+            model.wordlength = _hangmanGame.getword().Length;
            
 
             
