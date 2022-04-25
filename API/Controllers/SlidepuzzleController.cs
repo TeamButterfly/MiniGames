@@ -42,14 +42,10 @@ namespace API.Controllers
 
         [Route("Move")]
         [HttpGet]
-        public ActionResult<SlidePuzzleModel> MoveTile(int swapvalue)
+        public ActionResult<int[]> MoveTile(int swapvalue)
         {
             var boardUpdate = _slidePuzzle.move(swapvalue);
-            var slidePuzzleModel = new SlidePuzzleModel
-            {
-                Board = boardUpdate
-            };
-            return Ok(slidePuzzleModel);
+            return Ok(boardUpdate);
         }
        
         [Route("isComplited")]
