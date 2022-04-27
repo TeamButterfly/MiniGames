@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 
 
-// TODOs : insert comments and descriptions to the methods/class 
-//         Optimer koden 
-
 namespace TicTacToe
 {
     public class TicTacToeGame
@@ -16,14 +13,16 @@ namespace TicTacToe
         int computerPos;
         int playerPos;
 
-
+        /// <summary>
+        /// Initiates the game
+        /// </summary>
         public void play()
         {
-
                 string[,] board = createBoard();
+
                 while (isRunning.Equals(""))
                 {
-                    //player's move and make it's move
+                    //take players input and insert into the board
                     playerPos = move(board);
                     while (playerMoves.Contains(playerPos) || computerMoves.Contains(playerPos))
                     {
@@ -39,15 +38,17 @@ namespace TicTacToe
                     if (isRunning.Length > 0) {
                         break;
                     }
+
                     currentUser = switchUser(currentUser);
 
-                    //computer's turn and make it's move
+                    //compute a random move and insert into the board
                     Random rand = new Random();
                     computerPos = rand.Next(1, 10);
                     while (playerMoves.Contains(computerPos) || computerMoves.Contains(computerPos))
                     {
                         computerPos = rand.Next(1, 10);
                     }
+
                     insertMove(computerPos, board, currentUser);
                     computerMoves.Add(computerPos);
                     printBoard(board);
@@ -56,11 +57,18 @@ namespace TicTacToe
                     {
                         break;
                     }
+
                     currentUser = switchUser(currentUser);
                 }
 
         }
 
+        /// <summary>
+        /// Creates the initial board
+        /// </summary>
+        /// <returns>
+        /// a 2D string array containing the board values
+        /// </returns>
         private string[,] createBoard()
         {
 
@@ -76,6 +84,10 @@ namespace TicTacToe
             return board;
         }
 
+        /// <summary>
+        /// Prints the current board in the console
+        /// </summary>
+        /// <param name="board"></param>
         private void printBoard(string[,] board)
         {
             for (int i = 0; i < 5; i++)
@@ -88,6 +100,14 @@ namespace TicTacToe
             }
         }
 
+        /// <summary>
+        /// The method takes and checks if the given input is valid or
+        /// asks for a new input if it is not valid
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns>
+        /// the coordinates of the move to be inserted in the board
+        /// </returns>
         private int move(string[,] board)
         { 
             int x = 0;
@@ -123,6 +143,13 @@ namespace TicTacToe
             return x;
         }
 
+        /// <summary>
+        /// takes the coordinates from the move() and inserts the current player's
+        /// symbol in the current board
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="board"></param>
+        /// <param name="currentUser"></param>
         private void insertMove(int pos, string[,] board, int currentUser)
         {
             string symbol = " ";
@@ -143,6 +170,7 @@ namespace TicTacToe
                 return;
             }
 
+            //insert the symbol at the given coordinates
             switch (pos)
             {
                 case 1:
@@ -187,6 +215,13 @@ namespace TicTacToe
             Console.Clear();
         }
 
+        /// <summary>
+        /// The method switches the current player
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <returns>
+        /// Method returns the next player
+        /// </returns>
         private int switchUser(int currentUser)
         {
             if (currentUser.Equals(0))
@@ -201,6 +236,15 @@ namespace TicTacToe
 
             return currentUser;
         }
+
+        /// <summary>
+        /// The method checks if either the player or computer has
+        /// won the game
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns>
+        /// a string containing information either for who has won the game or "" which continues the game
+        /// </returns>
         private string isGameWon(string[,] board)
         {
             // check the rows :
@@ -254,6 +298,8 @@ namespace TicTacToe
                 return board[0, 4];
 
             }
+
+            // check if game ended in a tie
             else if (playerMoves.Count + computerMoves.Count == 9)
             {
                 Console.Clear();
@@ -262,12 +308,18 @@ namespace TicTacToe
                 return "tie";
             }
             
+            // continue the game
             else { return ""; }
         }
 
+        /// <summary>
+        /// displays winner message in the board
+        /// </summary>
+        /// <param name="winner"></param>
+        /// <param name="board"></param>
         private void displayWinner(string winner, string [,] board)
         {
-            string win = "";
+            string win;
             if (winner == "X")
             {
                 win = "player";
