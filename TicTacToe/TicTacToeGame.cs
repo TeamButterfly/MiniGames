@@ -15,11 +15,11 @@ namespace TicTacToe
         static List<int> computerMoves = new List<int>();
         int computerPos;
         int playerPos;
-        bool quitGame = false;
+
 
         public void play()
         {
-            while (quitGame == false) {
+
                 string[,] board = createBoard();
                 while (isRunning.Equals(""))
                 {
@@ -58,8 +58,7 @@ namespace TicTacToe
                     }
                     currentUser = switchUser(currentUser);
                 }
-                restartGame();
-            }
+
         }
 
         private string[,] createBoard()
@@ -284,45 +283,6 @@ namespace TicTacToe
             Console.Clear();
             Console.WriteLine("Contragulations to {0} for winning the game", win);
             printBoard(board);
-        }
-        private bool restartGame()
-        {
-            Console.WriteLine("Wanna play again?" + "\n" + "Press y for trying again or n quitting the game");
-            string result = "";
-            try
-            {
-                result = Console.ReadLine();
-            }
-            catch (FormatException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
-            if (result == "y")
-            {
-                Console.Clear();
-                isRunning = "";
-                currentUser = 0;
-                playerMoves.Clear();
-                computerMoves.Clear();
-                quitGame = false;
-                return true;
-            }
-            else if (result == "n")
-            {
-                Console.Clear();
-                Console.WriteLine("Thank you for playing :)");
-                quitGame = true;
-                return false;
-            }
-            else 
-            {
-                Console.Clear();
-                Console.WriteLine("Something went wrong.");
-                restartGame();
-                return false;
-            }
-
         }
     }
 }
