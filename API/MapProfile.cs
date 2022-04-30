@@ -1,6 +1,7 @@
 ﻿using API.JsonModels;
 using AutoMapper;
 using BuisnessLogic;
+using Hangman;
 
 namespace API
 {
@@ -14,6 +15,9 @@ namespace API
 
             CreateMap<Account, AccountModel>();
             CreateMap<AccountModel, Account>();
+
+            CreateMap<HangmanResponseModel, HangmanModel>();
+            CreateMap<HangmanModel, HangmanResponseModel>();
         }
     }
 }

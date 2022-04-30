@@ -54,7 +54,7 @@ namespace API
             services.AddSingleton<IDatabaseConnection, DatabaseConnection>();
             services.AddSingleton<IAccountRepository, AccountRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<HangmanGame>();
+            services.AddSingleton<GameManager>();
             services.AddSingleton<SPGame>();
             services.AddTransient<ITokenService, TokenService>();
 
