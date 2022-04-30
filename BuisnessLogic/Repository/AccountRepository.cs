@@ -41,10 +41,13 @@ namespace BuisnessLogic.Repository
 
         public bool UpdateAccount(Account accountModel)
         {
-            var account = _dbContext.Accounts.FirstOrDefault(a => a.AccountId.Equals(accountModel.UserId));
+            var account = _dbContext.Accounts.FirstOrDefault(a => a.AccountId.Equals(accountModel.AccountId));
             if (account == null)
             {
-                throw new Exception("Kontoen eksisterer ikke");
+                var newAccount = new Account { AccountId = Guid.NewGuid(), Points = accountModel.Points, UserId = accountModel.UserId };
+                _dbContext.Accounts.Add(newAccount);
+                _dbContext.SaveChanges();
+                return true;
             }
 
             account.Points = accountModel.Points;

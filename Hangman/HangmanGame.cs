@@ -49,6 +49,10 @@ namespace Hangman
 
         public HangmanModel GuessLetter(char guess)
         {
+            if(hangmanModel.Life == 0 || hangmanModel.IsGameWon)
+            {
+                return hangmanModel;
+            }
             if (hangmanModel.Guesses.Contains(guess))
             {
                 return hangmanModel;
@@ -76,7 +80,11 @@ namespace Hangman
 
         public HangmanModel GuessWord(string wordGuessed)
         {
-            if(hangmanModel.Word != wordGuessed)
+            if (hangmanModel.Life == 0 || hangmanModel.IsGameWon)
+            {
+                return hangmanModel;
+            }
+            if (hangmanModel.Word != wordGuessed)
             {
                 hangmanModel.Life -= 1;
                 if (hangmanModel.Life == 0)
@@ -105,7 +113,6 @@ namespace Hangman
                     revealedWord += "_";
                 }
             }
-            revealedWord = revealedWord.Trim();
             return revealedWord;
         }
     }

@@ -43,6 +43,10 @@ namespace API.Controllers
         {
             var userId = Guid.Parse(_principal.Identity.Name);
             var hangmanModel = _gameManager.HangmanGuessLetter(userId, letter);
+            if (hangmanModel.IsGameWon)
+            {
+                GivePoints(userId);
+            }
             return Ok(_mapper.Map<HangmanResponseModel>(hangmanModel));
         }
 
@@ -52,9 +56,18 @@ namespace API.Controllers
         {
             var userId = Guid.Parse(_principal.Identity.Name);
             var hangmanModel = _gameManager.HangmanGuessWord(userId, word);
+            if (hangmanModel.IsGameWon)
+            {
+                GivePoints(userId);
+            }
             return Ok(_mapper.Map<HangmanResponseModel>(hangmanModel));
         }
 
-      
+        private void GivePoints(Guid userId)
+        {
+            var account = _accountRepository.GetAccountByUserId(userId);
+            account.Points += 5;
+            _accountRepository.UpdateAccount(account);
+        }
     }
 }
