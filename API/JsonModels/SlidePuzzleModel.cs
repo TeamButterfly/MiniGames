@@ -2,13 +2,10 @@
 
 namespace API.JsonModels
 {
-    public class SlidePuzzleModel
+    public class SlidePuzzleResponseModel
     {
         public int[] Board { get; set; }
-        //public bool gameState;
-       
-        //[Required(ErrorMessage = "Brugernavnet er påkrævet")]
-        //public string Username { get; set; }
-        
+
+        public bool IsGameWon { get; set; }
     }
 }

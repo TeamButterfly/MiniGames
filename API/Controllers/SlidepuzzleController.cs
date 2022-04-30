@@ -17,52 +17,53 @@ namespace API.Controllers
         private readonly IAccountRepository _accountRepository;
         private readonly IMapper _mapper;
         private readonly IPrincipal _principal;
-        private readonly SPGame _slidePuzzle;
+        private readonly GameManager _gameManager;
 
 
-        public SlidePuzzleController(IMapper mapper, IAccountRepository accountRepository, SPGame slide_Puzzle, IPrincipal principal)
+        public SlidePuzzleController(IMapper mapper, IAccountRepository accountRepository, GameManager gameManager, IPrincipal principal)
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
-            _slidePuzzle = slide_Puzzle;
+            _gameManager = gameManager;
             _principal = principal;
         }
 
-        [Route("Start")]
+        [Route("Reset")]
         [HttpGet]
-        public ActionResult<SlidePuzzleModel> CreateBoard(int gamesize)
+        public ActionResult<SlidePuzzleResponseModel> Reset(int size)
         {
-            var board = _slidePuzzle.createboard(gamesize);
-            var slidePuzzleModel = new SlidePuzzleModel
+            var userId = Guid.Parse(_principal.Identity.Name);
+            var slidePuzzleModel = new SlidePuzzleResponseModel
             {
-                Board = board
+                Board = _gameManager.SlidePuzzleResetGame(userId, size),
+                IsGameWon = _gameManager.SlidePuzzleIsCompleted(userId)
             };
             return Ok(slidePuzzleModel);
         }
 
         [Route("Move")]
         [HttpGet]
-        public ActionResult<int[]> MoveTile(int swapvalue)
+        public ActionResult<SlidePuzzleResponseModel> Move(int swapvalue)
         {
-            var boardUpdate = _slidePuzzle.move(swapvalue);
-            return Ok(boardUpdate);
-        }
-       
-        [Route("isComplited")]
-        [HttpGet]
-        public ActionResult<bool> Solved()
-        {
-            return Ok(_slidePuzzle.isComplited());
+            var userId = Guid.Parse(_principal.Identity.Name);
+            var slidePuzzleModel = new SlidePuzzleResponseModel
+            {
+                Board = _gameManager.SlidePuzzleMove(userId, swapvalue),
+                IsGameWon = _gameManager.SlidePuzzleIsCompleted(userId)
+            };
+            if (slidePuzzleModel.IsGameWon)
+            {
+                GivePoints();
+            }
+            return Ok(slidePuzzleModel);
         }
 
-        [Route("/points")]
-        [HttpPost]
-        public ActionResult<int> GivePoints()
+        private void GivePoints()
         {
-            var account = _accountRepository.GetAccountByUserId(Guid.Parse(_principal.Identity.Name));
-            account.Points = 2/_slidePuzzle.getPoints();
+            var userId = Guid.Parse(_principal.Identity.Name);
+            var account = _accountRepository.GetAccountByUserId(userId);
+            account.Points += 50/_gameManager.SlidePuzzleGetScore(userId);
             _accountRepository.UpdateAccount(account);
-            return Ok(account.Points);
         }
     }
 }

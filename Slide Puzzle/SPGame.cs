@@ -10,19 +10,20 @@ namespace Slide_Puzzle
 {
     public static class Extensions
     {
-        public static int findIndex<T>(this T[] array, T item)
+        public static int FindIndex<T>(this T[] array, T item)
         {
             return Array.IndexOf(array, item);
         }
     }
     public class SPGame
     {
-        int n;
-        int[] arr, sol;
-        int amountOfMoves;
+        private int n;
+        private int[] arr, sol;
+        private int amountOfMoves;
 
-        public int[] createboard(int n)
+        public int[] CreateBoard(int n)
         {
+            this.n = n;
             amountOfMoves = 0;
 
             //creating every tile
@@ -38,29 +39,29 @@ namespace Slide_Puzzle
             // a random item to swap into that spot.
             for (int i = 0; i < arr.Length - 1; i++)
             {
-                int j = rand.Next(i, arr.Length);
-                int temp = arr[i];
+                var j = rand.Next(i, arr.Length);
+                var temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
             return arr;
         }
 
-        public int[] move(int swapvalue)
+        public int[] Move(int swapvalue)
         {
             //checks if tile n is neighbor with 0, if not try again
-            if (isNeighbor(swapvalue))
-                swap(swapvalue);
+            if (IsNeighbor(swapvalue))
+                Swap(swapvalue);
             else
                 Console.WriteLine("The tile you want to move isn't neighbor with 0, try again");
             return arr;
         }
 
-        public bool isNeighbor(int swapvalue)
+        public bool IsNeighbor(int swapvalue)
         {
-            List<int> zerosNeighbors = new List<int>();
-            int s = arr.Length;
-            int ss = Convert.ToInt32(Math.Sqrt(arr.Length));
+            var zerosNeighbors = new List<int>();
+            var s = arr.Length;
+            var ss = Convert.ToInt32(Math.Sqrt(arr.Length));
 
             //find neighbors
             for (int i = 0; i<s; i++)
@@ -151,12 +152,9 @@ namespace Slide_Puzzle
                 return false;
 
         }
-        public void swap(int swapvalue)
+        public void Swap(int swapvalue)
         {
-            countAmountOfMoves();
-
-            //swapping n with 0
-            int temp;
+            CountAmountOfMoves();
             int zero = 0;
             int swapindex = 0;
             for (int i = 0; i < arr.Length; i++)
@@ -174,11 +172,11 @@ namespace Slide_Puzzle
             arr[zero] = swapvalue;
             arr[swapindex] = 0;
         }
-        public void countAmountOfMoves()
+        public void CountAmountOfMoves()
         {
             amountOfMoves += 1;
         }
-        public void solution()
+        public void Solution()
         {
             sol = new int[n];
 
@@ -190,15 +188,15 @@ namespace Slide_Puzzle
                     sol[i] = i+1;
             }
         }
-        public bool isComplited()
+        public bool IsCompleted()
         {
-            solution();
+            Solution();
             if (arr.SequenceEqual(sol))
                 return true;
             return false;
         }
 
-        public int getPoints()
+        public int GetScore()
         {
             return amountOfMoves;
         }

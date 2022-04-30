@@ -2,7 +2,6 @@
 using BuisnessLogic;
 using BuisnessLogic.Repository;
 using BuisnessLogic.Services;
-using Hangman;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -51,11 +50,11 @@ namespace API
 
             services.AddDbContext<DatabaseContext>();
 
+            services.AddSingleton<GameManager>();
+
             services.AddSingleton<IDatabaseConnection, DatabaseConnection>();
             services.AddSingleton<IAccountRepository, AccountRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<GameManager>();
-            services.AddSingleton<SPGame>();
             services.AddTransient<ITokenService, TokenService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
