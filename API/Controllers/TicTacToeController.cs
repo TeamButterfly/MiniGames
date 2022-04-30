@@ -32,16 +32,16 @@ namespace API.Controllers
         public ActionResult<TicTacToeResponseModel> Reset(int squares)
         {
             var userId = Guid.Parse(_principal.Identity.Name);
-            var ticTacToeModel = _gameManager.TicTacToeResetGame(userId, 3);
+            var ticTacToeModel = _gameManager.TicTacToeResetGame(userId, squares);
             return Ok(_mapper.Map<TicTacToeResponseModel>(ticTacToeModel));
         }
 
         [Route("SetField")]
         [HttpGet]
-        public ActionResult<TicTacToeResponseModel> SetField(int row, int col, TicTacToeEnum ticTacToeEnum)
+        public ActionResult<TicTacToeResponseModel> SetField(int row, int col)
         {
             var userId = Guid.Parse(_principal.Identity.Name);
-            var ticTacToeModel = _gameManager.TicTacToeSetField(userId, row, col, ticTacToeEnum);
+            var ticTacToeModel = _gameManager.TicTacToeSetField(userId, row, col);
             if(ticTacToeModel.Winner == TicTacToeEnum.Cross)
             {
                 GivePoints();

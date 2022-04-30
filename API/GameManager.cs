@@ -100,12 +100,12 @@ namespace API
             return activeTicTacToeGames[userId].ResetGame(squares);
         }
 
-        public TicTacToeModel TicTacToeSetField(Guid userId, int row, int col, TicTacToeEnum ticTacToeEnum)
+        public TicTacToeModel TicTacToeSetField(Guid userId, int row, int col)
         {
             if (activeTicTacToeGames.ContainsKey(userId))
             {
                 var ticTacToeGame = activeTicTacToeGames[userId];
-                return ticTacToeGame.SetField(row, col, ticTacToeEnum);
+                return ticTacToeGame.SetField(row, col);
             }
             return null;
         }

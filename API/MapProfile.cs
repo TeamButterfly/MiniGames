@@ -2,6 +2,7 @@
 using AutoMapper;
 using BuisnessLogic;
 using Hangman;
+using TicTacToe;
 
 namespace API
 {

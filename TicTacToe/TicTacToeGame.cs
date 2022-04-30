@@ -10,10 +10,12 @@ namespace TicTacToe
     {
         private int squares;
         private TicTacToeModel ticTacToeModel;
+        private TicTacToeEnum turn;
 
         public TicTacToeModel ResetGame(int squares)
         {
             this.squares = squares;
+            turn = TicTacToeEnum.Cross;
             ticTacToeModel = new TicTacToeModel
             {
                 Board = new List<List<TicTacToeEnum>>(),
@@ -22,7 +24,7 @@ namespace TicTacToe
             for(int i = 0; i < squares; i++)
             {
                 var row = new List<TicTacToeEnum>();
-                for (int j = 0; j < squares; i++)
+                for (int j = 0; j < squares; j++)
                 {
                     row.Add(TicTacToeEnum.None);
                 }
@@ -31,7 +33,7 @@ namespace TicTacToe
             return ticTacToeModel;
         }
 
-        public TicTacToeModel SetField(int row, int col, TicTacToeEnum ticTacToeEnum)
+        public TicTacToeModel SetField(int row, int col)
         {
             if(row >= squares || row < 0 || col >= squares || col < 0 || ticTacToeModel.Winner != TicTacToeEnum.None)
             {
@@ -40,7 +42,8 @@ namespace TicTacToe
 
             if(ticTacToeModel.Board[row][col] == TicTacToeEnum.None)
             {
-                ticTacToeModel.Board[row][col] = ticTacToeEnum;
+                ticTacToeModel.Board[row][col] = turn;
+                turn = turn == TicTacToeEnum.Cross ? TicTacToeEnum.Circle : TicTacToeEnum.Cross;
             }
             ticTacToeModel.Winner = CheckWinner();
             return ticTacToeModel;
@@ -83,6 +86,8 @@ namespace TicTacToe
             {
                 for (int i = 0; i < squares; i++)
                 {
+                    previousElement = null;
+                    gameOver = true;
                     for (int j = 0; j < squares; j++)
                     {
                         TicTacToeEnum field = ticTacToeModel.Board[i][j];
@@ -113,6 +118,7 @@ namespace TicTacToe
                         }
                         previousElement = field;
                     }
+                    if (gameOver && previousElement.HasValue) return previousElement.Value;
                 }
             }
             else
