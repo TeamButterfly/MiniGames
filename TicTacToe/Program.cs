@@ -7,9 +7,6 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            // test commit
-            TicTacToeGame game = new TicTacToeGame();
-            game.play();
         }
     }
 }

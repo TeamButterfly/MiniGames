@@ -11,6 +11,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     
     public class SlidePuzzleController : ControllerBase
     {

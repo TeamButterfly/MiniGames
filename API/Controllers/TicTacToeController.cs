@@ -3,6 +3,7 @@ using AutoMapper;
 using BuisnessLogic.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Principal;
 using TicTacToe;
 
@@ -16,15 +17,44 @@ namespace API.Controllers
         private readonly IAccountRepository _accountRepository;
         private readonly IPrincipal _principal;
         private readonly IMapper _mapper;
-        private readonly TicTacToeGame _tictactoeGame;
+        private readonly GameManager _gameManager;
 
-        public TicTacToeController(IMapper mapper, IAccountRepository accountRepository, IPrincipal principal, TicTacToeGame tictactoeGame)
+        public TicTacToeController(IMapper mapper, IAccountRepository accountRepository, IPrincipal principal, GameManager gameManager)
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
             _principal = principal;
-            _tictactoeGame = tictactoeGame;
+            _gameManager = gameManager;
         }
 
+        [Route("Reset")]
+        [HttpGet]
+        public ActionResult<TicTacToeResponseModel> Reset(int squares)
+        {
+            var userId = Guid.Parse(_principal.Identity.Name);
+            var ticTacToeModel = _gameManager.TicTacToeResetGame(userId, 3);
+            return Ok(_mapper.Map<TicTacToeResponseModel>(ticTacToeModel));
+        }
+
+        [Route("SetField")]
+        [HttpGet]
+        public ActionResult<TicTacToeResponseModel> SetField(int row, int col, TicTacToeEnum ticTacToeEnum)
+        {
+            var userId = Guid.Parse(_principal.Identity.Name);
+            var ticTacToeModel = _gameManager.TicTacToeSetField(userId, row, col, ticTacToeEnum);
+            if(ticTacToeModel.Winner == TicTacToeEnum.Cross)
+            {
+                GivePoints();
+            }
+            return Ok(_mapper.Map<TicTacToeResponseModel>(ticTacToeModel));
+        }
+
+        private void GivePoints()
+        {
+            var userId = Guid.Parse(_principal.Identity.Name);
+            var account = _accountRepository.GetAccountByUserId(userId);
+            account.Points += 5;
+            _accountRepository.UpdateAccount(account);
+        }
     }
 }

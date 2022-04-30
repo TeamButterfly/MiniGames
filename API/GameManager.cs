@@ -5,31 +5,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicTacToe;
 
 namespace API
 {
     public class GameManager
     {
-        public Dictionary<Guid, HangmanGame> activeHangmanGame = new Dictionary<Guid, HangmanGame>();
-        public Dictionary<Guid, SPGame> activeSlidePuzzleGame = new Dictionary<Guid, SPGame>();
+        public Dictionary<Guid, HangmanGame> activeHangmanGames = new Dictionary<Guid, HangmanGame>();
+        public Dictionary<Guid, SPGame> activeSlidePuzzleGames = new Dictionary<Guid, SPGame>();
+        public Dictionary<Guid, TicTacToeGame> activeTicTacToeGames = new Dictionary<Guid, TicTacToeGame>();
 
         /*
          * Hangman Game 
          */
         public HangmanModel HangmanResetGame(Guid userId)
         {
-            if (!activeHangmanGame.ContainsKey(userId))
+            if (!activeHangmanGames.ContainsKey(userId))
             {
-                activeHangmanGame[userId] = new HangmanGame();
+                activeHangmanGames[userId] = new HangmanGame();
             }
-            return activeHangmanGame[userId].ResetGame();
+            return activeHangmanGames[userId].ResetGame();
         }
 
         public HangmanModel HangmanGuessLetter(Guid userId, char letter)
         {
-            if (activeHangmanGame.ContainsKey(userId))
+            if (activeHangmanGames.ContainsKey(userId))
             {
-                var hangmanGame = activeHangmanGame[userId];
+                var hangmanGame = activeHangmanGames[userId];
                 return hangmanGame.GuessLetter(letter);
             }
             return null;
@@ -37,31 +39,31 @@ namespace API
 
         public HangmanModel HangmanGuessWord(Guid userId, string word)
         {
-            if (activeHangmanGame.ContainsKey(userId))
+            if (activeHangmanGames.ContainsKey(userId))
             {
-                var hangmanGame = activeHangmanGame[userId];
+                var hangmanGame = activeHangmanGames[userId];
                 return hangmanGame.GuessWord(word);
             }
             return null;
         }
 
         /*
-         * Slide Puzlle Game 
+         * Slide Puzzle Game 
          */
         public int[] SlidePuzzleResetGame(Guid userId, int size)
         {
-            if (!activeSlidePuzzleGame.ContainsKey(userId))
+            if (!activeSlidePuzzleGames.ContainsKey(userId))
             {
-                activeSlidePuzzleGame[userId] = new SPGame();
+                activeSlidePuzzleGames[userId] = new SPGame();
             }
-            return activeSlidePuzzleGame[userId].CreateBoard(size);
+            return activeSlidePuzzleGames[userId].CreateBoard(size);
         }
 
         public int[] SlidePuzzleMove(Guid userId, int swapvalue)
         {
-            if (activeSlidePuzzleGame.ContainsKey(userId))
+            if (activeSlidePuzzleGames.ContainsKey(userId))
             {
-                var slidePuzzleGame = activeSlidePuzzleGame[userId];
+                var slidePuzzleGame = activeSlidePuzzleGames[userId];
                 return slidePuzzleGame.Move(swapvalue);
             }
             return null;
@@ -69,21 +71,43 @@ namespace API
 
         public bool SlidePuzzleIsCompleted(Guid userId)
         {
-            if (activeSlidePuzzleGame.ContainsKey(userId))
+            if (activeSlidePuzzleGames.ContainsKey(userId))
             {
-                var slidePuzzleGame = activeSlidePuzzleGame[userId];
+                var slidePuzzleGame = activeSlidePuzzleGames[userId];
                 return slidePuzzleGame.IsCompleted();
             }
             return false;
         }
         public int SlidePuzzleGetScore(Guid userId)
         {
-            if (activeSlidePuzzleGame.ContainsKey(userId))
+            if (activeSlidePuzzleGames.ContainsKey(userId))
             {
-                var slidePuzzleGame = activeSlidePuzzleGame[userId];
+                var slidePuzzleGame = activeSlidePuzzleGames[userId];
                 return slidePuzzleGame.GetScore();
             }
             return 0;
+        }
+
+        /*
+         * Tic Tac Toe Game 
+         */
+        public TicTacToeModel TicTacToeResetGame(Guid userId, int squares)
+        {
+            if (!activeTicTacToeGames.ContainsKey(userId))
+            {
+                activeTicTacToeGames[userId] = new TicTacToeGame();
+            }
+            return activeTicTacToeGames[userId].ResetGame(squares);
+        }
+
+        public TicTacToeModel TicTacToeSetField(Guid userId, int row, int col, TicTacToeEnum ticTacToeEnum)
+        {
+            if (activeTicTacToeGames.ContainsKey(userId))
+            {
+                var ticTacToeGame = activeTicTacToeGames[userId];
+                return ticTacToeGame.SetField(row, col, ticTacToeEnum);
+            }
+            return null;
         }
     }
 }

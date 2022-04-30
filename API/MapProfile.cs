@@ -18,6 +18,9 @@ namespace API
 
             CreateMap<HangmanResponseModel, HangmanModel>();
             CreateMap<HangmanModel, HangmanResponseModel>();
+
+            CreateMap<TicTacToeResponseModel, TicTacToeModel>();
+            CreateMap<TicTacToeModel, TicTacToeResponseModel>();
         }
     }
 }
