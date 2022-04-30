@@ -43,7 +43,9 @@ namespace TicTacToe
             ticTacToeModel = SetField(row, col, ticTacToeModel);
             if (ticTacToeModel.Winner == TicTacToeEnum.None && turn == TicTacToeEnum.Circle)
             {
+                TicTacToeAi.StartTimer();
                 var bestMove = TicTacToeAi.AlphaBeta(ticTacToeModel, 0, int.MinValue, int.MaxValue, TicTacToeEnum.Circle, squares);
+                TicTacToeAi.StopTimer();
                 ticTacToeModel = SetField(bestMove.Move.Item1, bestMove.Move.Item2, ticTacToeModel);
                 ticTacToeModel.Winner = CheckWinner(ticTacToeModel, squares);
             }

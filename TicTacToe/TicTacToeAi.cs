@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace TicTacToe
 {
@@ -14,9 +15,33 @@ namespace TicTacToe
             public Tuple<int, int> Move { get; set; }
         }
 
+        private static System.Timers.Timer stopAlphaBetaTimer;
+
+        private static bool stopAlphaBeta = false;
+
+        private static void StopAlphaBeta(Object source, ElapsedEventArgs e)
+        {
+            stopAlphaBeta = true;
+        }
+
+        public static void StartTimer()
+        {
+            //Stop med at lave Alpha Beta algoritmen efter 10 sek
+            stopAlphaBetaTimer = new System.Timers.Timer(10000);
+            stopAlphaBetaTimer.Elapsed += StopAlphaBeta;
+            stopAlphaBetaTimer.AutoReset = true;
+            stopAlphaBetaTimer.Enabled = true;
+            stopAlphaBetaTimer.Start();
+        }
+        public static void StopTimer()
+        {
+            stopAlphaBetaTimer.Stop();
+            stopAlphaBeta = false;
+        }
+
         public static BestMove AlphaBeta(TicTacToeModel ticTacToeModel, int depth, int alpha, int beta, TicTacToeEnum maximizingPlayer, int squares)
         {
-            // Alpha Beta Min Max
+            // En implementering af Alpha Beta Min Max algoritmen
 
             var bestMove = new BestMove
             {
@@ -27,7 +52,7 @@ namespace TicTacToe
             var moves = GetMoves(ticTacToeModel);
 
             ticTacToeModel.Winner = TicTacToeGame.CheckWinner(ticTacToeModel, squares);
-            if (ticTacToeModel.Winner != TicTacToeEnum.None || moves.Count == 0)
+            if (ticTacToeModel.Winner != TicTacToeEnum.None || moves.Count == 0 || stopAlphaBeta)
             {
                 bestMove.Score = Evaluate(ticTacToeModel);
                 ticTacToeModel.Winner = TicTacToeEnum.None;
