@@ -53,7 +53,7 @@ namespace API.Controllers
         {
             var userId = Guid.Parse(_principal.Identity.Name);
             var account = _accountRepository.GetAccountByUserId(userId);
-            account.Points += 5;
+            account.Points += 100;
             _accountRepository.UpdateAccount(account);
         }
     }

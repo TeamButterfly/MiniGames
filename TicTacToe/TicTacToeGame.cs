@@ -8,6 +8,11 @@ namespace TicTacToe
 {
     public class TicTacToeGame
     {
+        public enum CheckLineEnum
+        {
+            Row, Col, DiagonalTop, DiagonalBottom
+        }
+
         private int squares;
         private TicTacToeModel ticTacToeModel;
         private TicTacToeEnum turn;
@@ -21,7 +26,7 @@ namespace TicTacToe
                 Board = new List<List<TicTacToeEnum>>(),
                 Winner = TicTacToeEnum.None
             };
-            for(int i = 0; i < squares; i++)
+            for (int i = 0; i < squares; i++)
             {
                 var row = new List<TicTacToeEnum>();
                 for (int j = 0; j < squares; j++)
@@ -35,49 +40,56 @@ namespace TicTacToe
 
         public TicTacToeModel SetField(int row, int col)
         {
-            if(row >= squares || row < 0 || col >= squares || col < 0 || ticTacToeModel.Winner != TicTacToeEnum.None)
+            ticTacToeModel = SetField(row, col, ticTacToeModel);
+            if (ticTacToeModel.Winner == TicTacToeEnum.None && turn == TicTacToeEnum.Circle)
+            {
+                var bestMove = TicTacToeAi.AlphaBeta(ticTacToeModel, 0, int.MinValue, int.MaxValue, TicTacToeEnum.Circle, squares);
+                ticTacToeModel = SetField(bestMove.Move.Item1, bestMove.Move.Item2, ticTacToeModel);
+                ticTacToeModel.Winner = CheckWinner(ticTacToeModel, squares);
+            }
+
+            return ticTacToeModel;
+        }
+        private TicTacToeModel SetField(int row, int col, TicTacToeModel ticTacToeModel)
+        {
+            if (row >= squares || row < 0 || col >= squares || col < 0 || ticTacToeModel.Winner != TicTacToeEnum.None)
             {
                 return ticTacToeModel;
             }
 
-            if(ticTacToeModel.Board[row][col] == TicTacToeEnum.None)
+            if (ticTacToeModel.Board[row][col] == TicTacToeEnum.None)
             {
                 ticTacToeModel.Board[row][col] = turn;
                 turn = turn == TicTacToeEnum.Cross ? TicTacToeEnum.Circle : TicTacToeEnum.Cross;
             }
-            ticTacToeModel.Winner = CheckWinner();
+            ticTacToeModel.Winner = CheckWinner(ticTacToeModel, squares);
+
             return ticTacToeModel;
         }
 
-
-        private enum CheckLineEnum
-        {
-            Row, Col, DiagonalTop, DiagonalBottom
-        }
-
-        private TicTacToeEnum CheckWinner()
+        public static TicTacToeEnum CheckWinner(TicTacToeModel ticTacToeModel, int squares)
         {
             TicTacToeEnum ticTacToeEnumWinner;
 
             //Tjekker rows [i, j] -> [i+1, j+1]
-            ticTacToeEnumWinner = CheckLine(CheckLineEnum.Row);
+            ticTacToeEnumWinner = CheckLine(CheckLineEnum.Row, ticTacToeModel, squares);
             if (ticTacToeEnumWinner != TicTacToeEnum.None) return ticTacToeEnumWinner;
 
             //Tjekker columns [j, i] -> [j+1, i+1]
-            ticTacToeEnumWinner = CheckLine(CheckLineEnum.Col);
+            ticTacToeEnumWinner = CheckLine(CheckLineEnum.Col, ticTacToeModel, squares);
             if (ticTacToeEnumWinner != TicTacToeEnum.None) return ticTacToeEnumWinner;
 
             //Tjekker diagonalt [i,i] -> [i+1, i+1]
-            ticTacToeEnumWinner = CheckLine(CheckLineEnum.DiagonalTop);
+            ticTacToeEnumWinner = CheckLine(CheckLineEnum.DiagonalTop, ticTacToeModel, squares);
             if (ticTacToeEnumWinner != TicTacToeEnum.None) return ticTacToeEnumWinner;
 
             //Tjekker diagonalt [i,i] -> [i-1, i+1]
-            ticTacToeEnumWinner = CheckLine(CheckLineEnum.DiagonalBottom);
+            ticTacToeEnumWinner = CheckLine(CheckLineEnum.DiagonalBottom, ticTacToeModel, squares);
             if (ticTacToeEnumWinner != TicTacToeEnum.None) return ticTacToeEnumWinner;
 
             return ticTacToeEnumWinner;
         }
-        private TicTacToeEnum CheckLine(CheckLineEnum checkLineEnum)
+        public static TicTacToeEnum CheckLine(CheckLineEnum checkLineEnum, TicTacToeModel ticTacToeModel, int squares)
         {
             TicTacToeEnum? previousElement = null;
             var gameOver = true;
@@ -164,5 +176,6 @@ namespace TicTacToe
                 return TicTacToeEnum.None;
             }
         }
+
     }
 }
