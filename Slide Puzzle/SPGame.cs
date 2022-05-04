@@ -17,7 +17,7 @@ namespace Slide_Puzzle
     }
     public class SPGame
     {
-        private int n;
+        private int n, invCounter;
         private int[] arr, sol;
         private int amountOfMoves;
 
@@ -30,20 +30,21 @@ namespace Slide_Puzzle
             arr = new int[n];
             for (int i = 0; i < n; i++)
             {
-                arr[i] = i;
+                if(i == n - 1)
+                {
+                    arr[i] = 0;
+                }else
+                    arr[i] = i+1;
             }
 
+            //swap the values based on the move method, for checking if the tiles i neighbor
             Random rand = new Random();
-
-            // For each spot in the array, pick
-            // a random item to swap into that spot.
-            for (int i = 0; i < arr.Length - 1; i++)
+            for (int i = 0; i < 500; i++)
             {
-                var j = rand.Next(i, arr.Length);
-                var temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+                var k = rand.Next(1, arr.Length);
+                Move(k);
             }
+
             return arr;
         }
 
