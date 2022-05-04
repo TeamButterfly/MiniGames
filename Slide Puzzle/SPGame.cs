@@ -24,7 +24,9 @@ namespace Slide_Puzzle
         public int BoardSize(int n)
         {
             //check if input size is squarable
-            if (!((Math.Sqrt(n) % 1) == 0))
+            if (n == 2)
+                return 0;
+            else if (!((Math.Sqrt(n) % 1) == 0))
                 return n;
             else
                 return 0;
