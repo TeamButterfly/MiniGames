@@ -63,7 +63,7 @@ namespace API.Controllers
         {
             var userId = Guid.Parse(_principal.Identity.Name);
             var account = _accountRepository.GetAccountByUserId(userId);
-            account.Points += 50/_gameManager.SlidePuzzleGetScore(userId);
+            account.Points += (int)Math.Floor(_gameManager.SlidePuzzleGetScore(userId)/5.0);
             _accountRepository.UpdateAccount(account);
         }
     }

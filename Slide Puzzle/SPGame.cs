@@ -63,7 +63,10 @@ namespace Slide_Puzzle
         {
             //checks if tile n is neighbor with 0, if not try again
             if (IsNeighbor(swapvalue))
+            {
                 Swap(swapvalue);
+                CountAmountOfMoves();
+            }
             else
                 Console.WriteLine("The tile you want to move isn't neighbor with 0, try again");
             return arr;
@@ -166,7 +169,6 @@ namespace Slide_Puzzle
         }
         public void Swap(int swapvalue)
         {
-            CountAmountOfMoves();
             int zero = 0;
             int swapindex = 0;
             for (int i = 0; i < arr.Length; i++)
@@ -186,7 +188,7 @@ namespace Slide_Puzzle
         }
         public void CountAmountOfMoves()
         {
-            amountOfMoves += 1;
+            amountOfMoves++;
         }
         public void Solution()
         {
@@ -210,6 +212,7 @@ namespace Slide_Puzzle
 
         public int GetScore()
         {
+            Console.Write(amountOfMoves);
             return amountOfMoves;
         }
     }
