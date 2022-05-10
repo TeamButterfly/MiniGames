@@ -39,7 +39,7 @@ namespace Hangman
             {
                 Life = 6,
                 Word = word,
-                RevealedWord = "",
+                RevealedWord = "",  
                 Guesses = new List<char>(),
                 IsGameWon = false
             };
@@ -110,7 +110,7 @@ namespace Hangman
                 }
                 else
                 {
-                    revealedWord += "_";
+                    revealedWord += " _ ";
                 }
             }
             return revealedWord;

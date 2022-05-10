@@ -85,7 +85,9 @@ namespace TesterProject.StepDefinitions
         [Given(@"I am an existing user")]
         public void GivenIUpdateAnExistingUser()
         {
-            user = new User { UserId = _userRepository.GetUsers().First().UserId, Username = GenerateRandomString(8), Password = GenerateRandomString(8) };
+            user = new User { UserId = _userRepository.GetUsers().First().UserId, 
+            Username = GenerateRandomString(8), 
+            Password = GenerateRandomString(8) };
         }
         [When(@"I click the update user button")]
         public void WhenIClickTheUpdateUserButton()
